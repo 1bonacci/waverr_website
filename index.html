@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>waverr — index of a folder you already have</title>
+<meta name="description" content="waverr indexes your project folders and plays untagged WAVs and MP3s through a click-wheel device drawn on screen. Free and open source, for Windows.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/DepartureMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/GeistMono%5Bwght%5D.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!--
+THESIS: This page is a directory listing of one program. It refuses the
+dark-hero-plus-feature-cards arrangement every developer tool ships;
+structure comes from columns, rules and rows, never from cards.
+
+OWN-WORLD: Near-black ground, four greys, one ivory. Two monos: Departure
+Mono, a pixel face from early CLI screens, sets the listing, headings and
+labels; Geist Mono sets running prose only. Hairline column rules that run
+the full page height. Rows with name left, metadata right-aligned in a
+fixed column. The player is the only curved, light, physical object on
+the page.
+
+STORY: A producer sees their own filenames in the first viewport, reads
+that this indexes folders rather than libraries, sees the device that
+plays them, and downloads it.
+
+FIRST VIEWPORT: Full-width index header row across the top. Left column:
+the program's identity set as a listing entry at display scale. Right
+column: the white player, bled to the top rule. The primary action sits
+in the listing's own header row as a permanent entry, not a floating pill.
+
+FORM: Directory index / file listing. Candidate 5 of 7, seed ab9b946a.
+
+FINISH: unreviewed and undocumented is unfinished; this build ends with
+the finish review, the verdict, and DESIGN.md
+-->
+<header class="masthead">
+  <div class="idx masthead__inner">
+    <a class="masthead__name" href="#top">waverr</a>
+    <nav class="masthead__nav">
+      <a class="entry" href="#why">why</a>
+      <a class="entry" href="#does">what it does</a>
+      <a class="entry" href="#screens">screens</a>
+      <a class="entry" data-link="repo" href="https://github.com" rel="noopener">source</a>
+      <a class="entry entry--live" data-link="release" href="https://github.com">download</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section id="top" class="region region--top">
+    <div class="idx region--top__inner">
+      <div class="top__copy">
+        <h1 class="top__title">Index of<br><span class="top__path">/your&nbsp;project&nbsp;folders</span></h1>
+        <p class="top__lede">
+          Every other player wants a tagged library. You have forty folders of
+          takes that were never named for anyone but you. waverr indexes the
+          folders as they are and plays them through a click wheel.
+        </p>
+        <div class="top__actions">
+          <a class="entry entry--live" data-link="release" href="https://github.com">download for windows</a>
+          <a class="entry" data-link="repo" href="https://github.com" rel="noopener">read the source</a>
+        </div>
+        <p class="top__fine">Free and open source. No account, no library, no cloud.</p>
+      </div>
+      <div class="top__stage stage">
+        <div class="stage__device device" role="img"
+             aria-label="The waverr player: a white handheld device with a screen showing the Home menu — All Tracks, Recent, Favorites, Playlists, Queue — above a click wheel with MENU and an OK button.">
+          <span class="device__edge device__edge--side" aria-hidden="true"></span>
+          <span class="device__edge device__edge--foot" aria-hidden="true"></span>
+          <div class="device__face">
+          <div class="device__screen">
+            <div class="device__bar">
+              <span>HOME</span>
+              <span class="device__cell"></span>
+            </div>
+            <ul class="device__list">
+              <li class="device__row device__row--on"><span>All Tracks</span><em class="device__chev">&rsaquo;</em></li>
+              <li class="device__row"><span>Recent</span><em class="device__chev">&rsaquo;</em></li>
+              <li class="device__row"><span>Favorites</span><em class="device__chev">&rsaquo;</em></li>
+              <li class="device__row"><span>Playlists</span><em class="device__chev">&rsaquo;</em></li>
+              <li class="device__row"><span>Queue</span><em class="device__chev">&rsaquo;</em></li>
+            </ul>
+            <div class="device__viz" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+            </div>
+          </div>
+
+          <div class="device__wheel">
+            <span class="device__menu">MENU</span>
+            <svg class="device__mark device__mark--prev" viewBox="0 0 24 12" aria-hidden="true">
+              <path d="M11 1 3 6l8 5V1Z"/><path d="M21 1l-8 5 8 5V1Z"/>
+            </svg>
+            <svg class="device__mark device__mark--next" viewBox="0 0 24 12" aria-hidden="true">
+              <path d="M3 1l8 5-8 5V1Z"/><path d="M13 1l8 5-8 5V1Z"/>
+            </svg>
+            <svg class="device__mark device__mark--play" viewBox="0 0 28 12" aria-hidden="true">
+              <path d="M4 1l8 5-8 5V1Z"/><rect x="17" y="1" width="3" height="10"/><rect x="23" y="1" width="3" height="10"/>
+            </svg>
+            <div class="device__center">OK</div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="idx ruled top__listing">
+      <div class="row row--head">
+        <span class="row__name">Name</span>
+        <span class="row__meta">Folder</span>
+        <span class="row__size">Size</span>
+      </div>
+      <div class="row row--playing">
+        <span class="row__name">idea_140bpm.wav</span>
+        <span class="row__meta">sketches</span>
+        <span class="row__size">38.1 MB</span>
+      </div>
+      <div class="row">
+        <span class="row__name">beat_v3.wav</span>
+        <span class="row__meta">sketches</span>
+        <span class="row__size">52.7 MB</span>
+      </div>
+      <div class="row">
+        <span class="row__name">demo_final_FINAL.wav</span>
+        <span class="row__meta">mixdowns</span>
+        <span class="row__size">61.4 MB</span>
+      </div>
+      <div class="row">
+        <span class="row__name">vox_take7.mp3</span>
+        <span class="row__meta">mixdowns</span>
+        <span class="row__size">8.9 MB</span>
+      </div>
+      <div class="row row--more">
+        <span class="row__name">4,912 more files</span>
+        <span class="row__meta">indexed in ~1 s</span>
+        <span class="row__size"></span>
+      </div>
+    </div>
+  </section>
+  <section id="why" class="region region--why band--lit">
+    <div class="idx">
+      <h2 class="lead">
+        Ordinary players assume you named things.<br>
+        <span class="lead__dim">You were making music, not cataloguing it.</span>
+      </h2>
+    </div>
+
+    <div class="idx compare">
+      <div class="compare__side">
+        <p class="compare__label">What a library player looks for</p>
+        <ul class="compare__list">
+          <li><span>Artist</span><em>—</em></li>
+          <li><span>Album</span><em>—</em></li>
+          <li><span>Title</span><em>—</em></li>
+          <li><span>Track no.</span><em>—</em></li>
+          <li><span>Year</span><em>—</em></li>
+        </ul>
+        <p class="compare__note">Five fields your session folder never filled in.</p>
+      </div>
+      <div class="compare__side compare__side--ours">
+        <p class="compare__label">What waverr looks for</p>
+        <ul class="compare__list">
+          <li><span>The filename</span><em>idea_140bpm.wav</em></li>
+          <li><span>The path</span><em>/beats/sept/sketches</em></li>
+        </ul>
+        <p class="compare__note">
+          Both searchable by any fragment, anywhere inside them. Type
+          <code>bpm</code> and <code>loop_140bpm.wav</code> comes back.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section id="does" class="region region--does">
+    <div class="idx">
+      <h2 class="lead">What it does, in the order you meet it.</h2>
+    </div>
+
+    <div class="idx ruled does__listing">
+      <div class="row row--head">
+        <span class="row__name">Capability</span>
+        <span class="row__meta">Where</span>
+        <span class="row__size">Key</span>
+      </div>
+
+      <article class="row row--item">
+        <span class="row__name">
+          <b>One flat list of everything</b>
+          No folder browsing. Every indexed file in a single list, sorted by
+          folder then A–Z inside it, the folder shown on every row. Skipping
+          forward walks the whole library instead of stopping at a folder's end.
+        </span>
+        <span class="row__meta">ALL TRACKS</span>
+        <span class="row__size">up / down</span>
+      </article>
+
+      <article class="row row--item">
+        <span class="row__name">
+          <b>Search that matches the middle of a word</b>
+          A trigram index over filename and path, so a fragment finds a file
+          wherever it sits in the name. Measured over 5,000 files: the slowest
+          search took four milliseconds.
+        </span>
+        <span class="row__meta">any view</span>
+        <span class="row__size">a–z 0–9</span>
+      </article>
+
+      <article class="row row--item">
+        <span class="row__name">
+          <b>A queue that respects what you asked for</b>
+          What you queue by hand stays queued when you play something else. It
+          waits its turn. A session that went well becomes permanent with
+          SAVE AS PLAYLIST.
+        </span>
+        <span class="row__meta">QUEUE</span>
+        <span class="row__size">hold OK</span>
+      </article>
+
+      <article class="row row--item">
+        <span class="row__name">
+          <b>Missing files keep their place</b>
+          Unplug the drive and nothing is forgotten. A file that disappears is
+          marked missing rather than removed, and keeps its favorites for when
+          the drive comes back.
+        </span>
+        <span class="row__meta">ALL TRACKS</span>
+        <span class="row__size">F</span>
+      </article>
+
+      <article class="row row--item">
+        <span class="row__name">
+          <b>A visualizer, because it is that kind of device</b>
+          Real-time, drawn on the LCD, with modes you cycle while it plays.
+        </span>
+        <span class="row__meta">NOW PLAYING</span>
+        <span class="row__size">V</span>
+      </article>
+
+      <article class="row row--item">
+        <span class="row__name">
+          <b>The formats that come out of a session</b>
+          MP3, WAV, FLAC, M4A, AAC, OGG, Opus, AIFF and WMA are indexed and
+          searchable. Playback is verified on MP3, WAV, M4A and OGG.
+        </span>
+        <span class="row__meta">SETTINGS</span>
+        <span class="row__size">—</span>
+      </article>
+    </div>
+
+    <div class="idx">
+      <p class="does__caveat">
+        AIFF files are indexed and searchable, but Chromium cannot decode them,
+        so they will not play. Said here rather than discovered later.
+      </p>
+    </div>
+  </section>
+  <section id="screens" class="region region--screens band--lit">
+    <div class="idx">
+      <h2 class="lead">One screen, so you know what you are getting.</h2>
+      <p class="screens__note">
+        A capture of the running application goes here. It is the only slot on
+        this page waiting on a real file, and nothing in it is a mock-up.
+      </p>
+    </div>
+
+    <div class="idx screens__grid">
+      <figure class="shot">
+        <div class="shot__empty"><span>HOME</span></div>
+        <figcaption class="shot__cap">
+          Every indexed file in one list, the folder shown on every row.
+        </figcaption>
+      </figure>
+    </div>
+    <!--
+      Replace the .shot__empty div with the real capture:
+        <img class="shot__img" src="assets/screenshots/all-tracks.png"
+             alt="waverr showing the ALL TRACKS list" loading="lazy"
+             width="1280" height="800">
+      The slot is a fixed 16:10 box that crops to fill, so any aspect ratio fits.
+      To show more than one, copy the whole <figure> block; the grid reflows.
+    -->
+  </section>
+  <section id="get" class="region region--get band--lit">
+    <div class="idx">
+      <h2 class="lead">Point it at a folder and press play.</h2>
+    </div>
+
+    <div class="idx ruled get__listing">
+      <div class="row row--head">
+        <span class="row__name">File</span>
+        <span class="row__meta">Platform</span>
+        <span class="row__size">Cost</span>
+      </div>
+      <a class="row row--get" data-link="release" href="https://github.com">
+        <span class="row__name">waverr installer</span>
+        <span class="row__meta">Windows</span>
+        <span class="row__size">free</span>
+      </a>
+      <a class="row row--get" data-link="repo" href="https://github.com" rel="noopener">
+        <span class="row__name">waverr source</span>
+        <span class="row__meta">GitHub</span>
+        <span class="row__size">open</span>
+      </a>
+    </div>
+
+    <div class="idx">
+      <p class="get__fine">
+        Built with Electron. Windows installer only: there is no macOS or
+        Linux build. Nothing is uploaded anywhere; the index lives on your
+        machine.
+      </p>
+    </div>
+  </section>
+</main>
+<footer class="colophon">
+  <div class="idx colophon__inner">
+    <span class="colophon__name">waverr</span>
+    <a class="entry" data-link="repo" href="https://github.com" rel="noopener">github</a>
+  </div>
+</footer>
+<script src="script.js"></script>
+</body>
+</html>

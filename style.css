@@ -1,0 +1,965 @@
+/* == TOKENS ============================================== */
+/* Two monos, each doing a different job.
+
+   Departure Mono is a pixel face drawn from early command-line and 90s
+   screen interfaces — it IS the directory-index world, and it carries the
+   same character as the device's LCD. It sets the listing chrome, the
+   headings, and every label.
+
+   Geist Mono sets running prose only. Pixel faces stop being readable past
+   a sentence or two, and the paragraphs have to survive being read. */
+@font-face {
+  font-family: "Departure Mono";
+  src: url("assets/fonts/DepartureMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("assets/fonts/GeistMono%5Bwght%5D.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* The use scene decides this: a producer at their desk at night, room
+     lights low, monitor the brightest thing present. The page is dark
+     because the room is. */
+  --ink:    #0b0b0b;   /* page ground */
+  --ink-2:  #121212;   /* recessed ground */
+  --rule:   #262626;   /* hairlines */
+  --dim:    #5f5f5c;   /* metadata, inactive */
+  --mid:    #9a9a95;   /* body copy */
+  --paper:  #e8e8e6;   /* primary text, the device body */
+  --live:   #c8c8c2;   /* the one signal: playing, focus */
+
+  /* Light-band counterparts. The page alternates ground rather than staying
+     on one value: a band is a chapter, and the eye resets at each boundary.
+     Every role below is the same role inverted, so one set of component rules
+     serves both bands by reading the role tokens rather than the literals. */
+  --lit:     #ececea;  /* light band ground */
+  --lit-2:   #e0e0dd;  /* light band recessed ground */
+  --lit-rule:#c9c9c4;  /* light band hairlines */
+  /* Clears the 4.5:1 body floor on the band ground (5.40:1) AND on the
+     recessed ground it sits over in hovered rows and empty slots (4.83:1).
+     Metadata grey on a light band has to pass both or the floor is theatre. */
+  --lit-dim: #605f5b;
+  --lit-mid: #3d3d3a;  /* light band body copy */
+  --lit-ink: #101010;  /* light band primary text */
+  --lit-live:#0b0b0b;  /* light band signal */
+
+  /* Role tokens. Chrome reads these; a band swaps what they point at. */
+  --ground:  var(--ink);
+  --recess:  var(--ink-2);
+  --hair:    var(--rule);
+  --meta-fg: var(--dim);
+  --body-fg: var(--mid);
+  --fg:      var(--paper);
+  --signal:  var(--live);
+
+  --face-chrome: "Departure Mono", ui-monospace, monospace;  /* listing, headings, labels */
+  --face-prose:  "Geist Mono", ui-monospace, monospace;      /* running copy only */
+
+  --col-meta: 13ch;    /* right-aligned metadata column */
+  --col-size: 9ch;     /* right-aligned size column */
+  --gut:      clamp(1rem, 2.4vw, 2rem);
+  --rule-w:   1px;
+  --page:     1240px;
+}
+
+/* A light band. Only the role tokens move; no component rule is duplicated. */
+.band--lit {
+  --ground:  var(--lit);
+  --recess:  var(--lit-2);
+  --hair:    var(--lit-rule);
+  --meta-fg: var(--lit-dim);
+  --body-fg: var(--lit-mid);
+  --fg:      var(--lit-ink);
+  --signal:  var(--lit-live);
+  background: var(--ground);
+  color: var(--fg);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  /* The page carries both grounds now, so neither keyword alone is true.
+     The dark band is still the page's base, hence the order. */
+  color-scheme: dark light;
+  scroll-behavior: smooth;
+  background: var(--ink);
+}
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--fg);
+  font-family: var(--face-chrome);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.55;
+  font-variant-ligatures: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+img { max-width: 100%; display: block; }
+
+:focus-visible {
+  outline: 1px solid var(--signal);
+  outline-offset: 3px;
+}
+
+/* == INDEX PRIMITIVES ==================================== */
+/* Every region composes from these two. There is no second
+   layout system on this page and no card anywhere. */
+
+.idx {
+  width: 100%;
+  max-width: var(--page);
+  margin-inline: auto;
+  padding-inline: var(--gut);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--col-meta) var(--col-size);
+  column-gap: var(--gut);
+}
+
+/* A listing line. Its bottom hairline is the page's only divider. */
+.row {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: baseline;
+  padding-block: 0.62rem;
+  border-bottom: var(--rule-w) solid var(--hair);
+}
+
+@supports not (grid-template-columns: subgrid) {
+  .row {
+    grid-template-columns: minmax(0, 1fr) var(--col-meta) var(--col-size);
+  }
+}
+
+.row__name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row__meta,
+.row__size {
+  text-align: right;
+  color: var(--meta-fg);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.row--head {
+  border-bottom-color: var(--fg);
+  padding-block: 0.5rem;
+}
+
+.row--head .row__name,
+.row--head .row__meta,
+.row--head .row__size {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--meta-fg);
+}
+
+/* Column rules belong to the listings, where there are actually columns to
+   divide. They used to paint on every .region, which ran them the full height
+   of the page — through prose, headings, the device and empty space alike. Two
+   lines traversing the whole site with nothing to separate read as an artifact,
+   not as structure. Scoped to .ruled they mark the metadata and size tracks of
+   a real listing and stop where the listing stops.
+
+   Measured from the listing's OWN right edge inward, which is the only frame
+   that is always correct. Positioning them from the viewport (whether --page
+   or 100vw) put them wherever the scrollbar and the max-width cap disagreed —
+   off the gutters below 1240px, and past the right edge with the metadata
+   columns clipped at wide widths. */
+.ruled {
+  position: relative;
+  background-image:
+    linear-gradient(var(--hair), var(--hair)),
+    linear-gradient(var(--hair), var(--hair));
+  background-size: var(--rule-w) 100%, var(--rule-w) 100%;
+  background-repeat: no-repeat;
+  /* right-edge anchored: inset by the padding, then each column plus its gap. */
+  background-position:
+    right calc(var(--gut) + var(--col-size) + var(--gut) / 2) top,
+    right calc(var(--gut) + var(--col-size) + var(--col-meta) + var(--gut) * 1.5) top;
+}
+
+/* A light band paints its own ground, so the rules have to ride on top of it
+   rather than be covered by it. Both live in background-image, and the ground
+   is the last layer — painted behind the two hairlines, not over them. */
+.band--lit .ruled {
+  background-image:
+    linear-gradient(var(--hair), var(--hair)),
+    linear-gradient(var(--hair), var(--hair)),
+    linear-gradient(var(--ground), var(--ground));
+  background-size: var(--rule-w) 100%, var(--rule-w) 100%, 100% 100%;
+  background-position:
+    right calc(var(--gut) + var(--col-size) + var(--gut) / 2) top,
+    right calc(var(--gut) + var(--col-size) + var(--col-meta) + var(--gut) * 1.5) top,
+    left top;
+}
+
+.region { padding-block: clamp(3.5rem, 7vw, 6rem); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  /* The tilt script already declines to run here, but a stale inline angle
+     from a pre-toggle session must not survive as a frozen pose. */
+  .device { transform: rotateX(6deg) rotateY(-13deg) !important; }
+}
+
+/* == REGION: MASTHEAD ==================================== */
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--ground) 88%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: var(--rule-w) solid var(--fg);
+}
+
+.masthead__inner {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: 46px;
+}
+
+.masthead__name {
+  font-size: 0.86rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.masthead__nav {
+  display: flex;
+  gap: 1.6rem;
+  align-items: center;
+}
+
+/* The page's only action form: a listing entry, underlined on approach.
+   Not a pill, not a filled rectangle. */
+.entry {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--meta-fg);
+  text-decoration: none;
+  padding-block: 0.15rem;
+  border-bottom: var(--rule-w) solid transparent;
+  transition: color 140ms ease, border-color 140ms ease;
+}
+
+.entry:hover { color: var(--fg); border-bottom-color: var(--fg); }
+
+.entry--live {
+  color: var(--fg);
+  border-bottom-color: var(--signal);
+}
+.entry--live:hover { border-bottom-color: var(--fg); }
+
+/* Shown only while REPO_URL / RELEASE_URL still hold REPLACE_ME. Saying the
+   link is not ready beats sending someone to a bare github.com homepage. */
+.is-pending {
+  color: var(--meta-fg);
+  cursor: not-allowed;
+}
+
+/* The marker hangs off inline elements only. On a .row it must live inside
+   the name track — appending to the row itself would add a fourth grid item
+   to a three-track subgrid and land the text past the last column. */
+.entry.is-pending {
+  border-bottom-color: transparent;
+}
+.entry.is-pending::after,
+.row--get.is-pending .row__name::after {
+  content: " (soon)";
+  font-size: 0.85em;
+  color: var(--meta-fg);
+  letter-spacing: 0.04em;
+}
+
+.row--get.is-pending,
+.row--get.is-pending:hover { background: none; }
+.row--get.is-pending .row__name { color: var(--meta-fg); }
+.row--get.is-pending .row__name::before { background: var(--meta-fg); }
+
+/* == REGION: TOP ========================================= */
+.region--top { padding-top: 0; padding-bottom: 0; }
+
+.region--top__inner {
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  align-items: start;
+  column-gap: clamp(2rem, 5vw, 4.5rem);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.top__copy { padding-top: clamp(2.5rem, 5vw, 4rem); }
+
+.top__title {
+  margin: 0 0 1.6rem;
+  /* The real overflow cause: "/your project folders" is 21 characters, and at
+     the old clamp it wanted ~927px inside a ~598px copy column, so the line ran
+     out of its column and under the device. This clamp is sized from the column
+     the title actually occupies rather than from the viewport, and the line is
+     allowed to break at the slash so it never overflows at any width. */
+  font-size: clamp(1.75rem, 6vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1.02;
+  /* Tracking tightens as size grows — the world's type rule. */
+  letter-spacing: -0.045em;
+}
+
+.top__path {
+  color: var(--meta-fg);
+  display: inline-block;
+  max-width: 100%;
+}
+
+.top__lede {
+  font-family: var(--face-prose);
+  margin: 0 0 2rem;
+  max-width: min(54ch, 100%);
+  color: var(--body-fg);
+  font-size: clamp(0.92rem, 1.1vw, 1.02rem);
+  line-height: 1.7;
+}
+
+.top__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.top__actions .entry { font-size: 0.82rem; }
+
+.top__fine {
+  margin: 0;
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  color: var(--meta-fg);
+}
+
+.top__stage {
+  /* The stage owns the right half of the top split. Pinning it to a numbered
+     column was the original placement bug: .region--top__inner redefines the
+     grid to two columns, so column 2 there is not the column the three-track
+     base grid means, and at the 900px collapse the device landed outside the
+     single remaining track.
+
+     min-width: 0 lets the track actually shrink at narrow widths instead of
+     being forced open by the device and pushing itself over the headline, and
+     the stage clips its own overflow so a rotated chassis can never cross the
+     gutter into the copy column. */
+  grid-column: 2 / -1;
+  min-width: 0;
+  padding-top: clamp(2rem, 4.5vw, 3.25rem);
+}
+
+.top__listing { border-top: var(--rule-w) solid var(--hair); }
+
+/* The one signal on the page: the row that is playing. */
+.row--playing .row__name {
+  color: var(--fg);
+  position: relative;
+  padding-left: 1.3rem;
+}
+
+.row--playing .row__name::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.44em;
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--signal);
+}
+
+.row--playing .row__meta,
+.row--playing .row__size { color: var(--body-fg); }
+
+.row:not(.row--head):not(.row--more):not(.row--playing) .row__name { color: var(--body-fg); }
+
+.row--more {
+  border-bottom-color: transparent;
+}
+.row--more .row__name,
+.row--more .row__meta { color: var(--meta-fg); font-size: 0.8rem; }
+
+/* == REGION: DEVICE ====================================== */
+/* The one object on the page, and an actual solid: real thickness built from
+   transformed faces, not painted highlights. The camera lives on the stage so
+   every child of the device shares one perspective.
+
+   Depth is built OUTWARD from the face plane at Z=0 — the LCD and the wheel
+   are raised toward the viewer and the shell is pushed away behind them. The
+   opposite arrangement (sinking parts to negative Z) puts them behind the
+   chassis background, which paints over them and the screen disappears. */
+.stage {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  perspective: 1500px;
+  perspective-origin: 50% 40%;
+}
+
+.device {
+  position: relative;
+  width: min(300px, 100%);
+  padding: 18px 18px 24px;
+  border-radius: 26px;
+  /* A real shell reads as a curved surface, not a flat cutout: the gradient is
+     the falloff across its width, which is what the reference object shows. */
+  background:
+    linear-gradient(104deg, #fdfdfc 0%, #f1f1ef 42%, #dededa 82%, #cfcfca 100%);
+  transform-style: preserve-3d;
+  --rx: 4deg;
+  --ry: -11deg;
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform 460ms cubic-bezier(.16, .84, .36, 1);
+  box-shadow:
+    0 34px 70px rgba(0,0,0,.6),
+    0 8px 22px rgba(0,0,0,.4),
+    0 1px 0 rgba(255,255,255,.9) inset;
+}
+
+.device.is-live { transition: none; }
+
+/* The two edges visible at this rest angle, hinged off the face and rotated
+   into place so the object has genuine thickness rather than a drawn outline. */
+.device__edge {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 26px;
+}
+
+.device__edge--side {
+  top: 0;
+  right: 0;
+  width: var(--depth, 11px);
+  height: 92%;
+  top: 4%;
+  transform-origin: right center;
+  transform: rotateY(90deg) translateX(calc(var(--depth, 11px) / 2));
+  /* Darker than the face and falling off toward the bottom: an edge turned
+     away from the light, not a second lit surface. */
+  background: linear-gradient(180deg, #b4b4af 0%, #9e9e99 55%, #8d8d88 100%);
+  border-radius: 3px;
+}
+
+.device__edge--foot {
+  left: 0;
+  bottom: 0;
+  width: 92%;
+  left: 4%;
+  height: var(--depth, 11px);
+  transform-origin: center bottom;
+  transform: rotateX(-90deg) translateY(calc(var(--depth, 11px) / -2));
+  background: linear-gradient(90deg, #c8c8c3 0%, #ababa6 100%);
+  border-radius: 3px;
+}
+
+/* The face plane. Everything readable sits on or above it. */
+.device__face {
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+/* == DEVICE: SCREEN ====================================== */
+/* Raised off the face and ringed by a bezel, so it reads as a panel set into
+   the shell rather than a rectangle printed on it. */
+.device__screen {
+  position: relative;
+  font-family: var(--face-chrome);
+  background: linear-gradient(168deg, #eef2f7 0%, #dde5ee 58%, #d3dce8 100%);
+  border-radius: 6px;
+  padding: 8px 9px 7px;
+  margin-bottom: 20px;
+  transform: translateZ(3px);
+  color: #1d2733;
+  font-size: 0.66rem;
+  border: 1px solid #b9c0ca;
+  box-shadow:
+    0 1px 2px rgba(0,0,0,.18),
+    0 0 0 3px rgba(0,0,0,.05);
+}
+
+.device__bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.56rem;
+  letter-spacing: 0.1em;
+  color: #2b3542;
+  font-weight: 500;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #b9c0ca;
+}
+
+.device__cell {
+  width: 15px; height: 7px;
+  border: 1px solid #58616d;
+  position: relative;
+}
+.device__cell::before {
+  content: ""; position: absolute; inset: 1px; right: 5px; background: #58616d;
+}
+
+.device__list { list-style: none; margin: 0 0 7px; padding: 0; }
+
+.device__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 4px;
+  overflow: hidden;
+  white-space: nowrap;
+  color: #2b3542;
+}
+
+.device__row span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* The selected row, in the product's own selection blue. */
+.device__row--on {
+  background: #1667d4;
+  color: #fff;
+  border-radius: 2px;
+}
+
+.device__chev { color: #7d8894; font-size: 0.7em; }
+.device__row--on .device__chev { color: rgba(255,255,255,.85); }
+
+.device__viz {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 26px;
+  padding-top: 5px;
+  border-top: 1px solid #b9c0ca;
+}
+
+.device__viz i {
+  flex: 1;
+  height: 14%;
+  background: #4a7fc4;
+  animation: viz 820ms ease-in-out infinite alternate;
+}
+
+@keyframes viz {
+  from { height: 10%; }
+  to   { height: 100%; }
+}
+
+/* == DEVICE: WHEEL ======================================= */
+/* A ring standing proud of the face, with the button raised again off the ring.
+   Both carry a contact shadow, which is what sells the gap between them. */
+.device__wheel {
+  position: relative;
+  width: 168px; height: 168px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 34%, #fbfbfa 0%, #ededea 58%, #dcdcd8 100%);
+  transform-style: preserve-3d;
+  transform: translateZ(5px);
+  box-shadow:
+    0 3px 8px rgba(0,0,0,.22),
+    0 1px 0 rgba(255,255,255,.9) inset,
+    0 0 0 1px rgba(0,0,0,.06);
+}
+
+.device__center {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 66px; height: 66px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 36%, #fdfdfd 0%, #f0f0ee 62%, #e2e2de 100%);
+  transform: translate(-50%, -50%) translateZ(4px);
+  display: grid;
+  place-items: center;
+  font-size: 0.56rem;
+  letter-spacing: 0.14em;
+  color: #8b8b90;
+  box-shadow:
+    0 2px 5px rgba(0,0,0,.2),
+    0 0 0 1px rgba(0,0,0,.05);
+}
+
+.device__menu {
+  position: absolute;
+  top: 13px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.54rem;
+  letter-spacing: 0.14em;
+  color: #8b8b90;
+}
+
+.device__mark {
+  position: absolute;
+  width: 21px;
+  fill: #8b8b90;
+}
+.device__mark--prev { left: 14px; top: 50%; transform: translateY(-50%); }
+.device__mark--next { right: 14px; top: 50%; transform: translateY(-50%); }
+.device__mark--play { bottom: 13px; left: 50%; transform: translateX(-50%); width: 25px; }
+
+/* == REGION: WHY ========================================= */
+.region--why { border-top: var(--rule-w) solid var(--hair); }
+
+.lead {
+  grid-column: 1 / -1;
+  margin: 0 0 clamp(2.5rem, 5vw, 4rem);
+  max-width: min(24ch, 100%);
+  font-size: clamp(1.5rem, 3.2vw, 2.45rem);
+  font-weight: 500;
+  line-height: 1.16;
+  letter-spacing: -0.035em;
+}
+
+.lead__dim { color: var(--meta-fg); }
+
+.compare {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(2rem, 5vw, 4rem);
+}
+
+.compare__side { grid-column: span 1; }
+
+/* The right-hand side is the product's answer; a single hairline on its
+   left edge marks it without turning it into a panel. */
+.compare__side--ours {
+  padding-left: clamp(1.25rem, 3vw, 2.25rem);
+}
+
+.compare__label {
+  margin: 0 0 1.1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: var(--rule-w) solid var(--hair);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--meta-fg);
+}
+
+.compare__list { list-style: none; margin: 0 0 1.2rem; padding: 0; }
+
+/* Rows here obey the same name/value rhythm as every other listing on the
+   page rather than inventing a private flex layout. */
+.compare__list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: baseline;
+  padding-block: 0.5rem;
+  border-bottom: var(--rule-w) solid var(--hair);
+  font-size: 0.86rem;
+}
+
+.compare__list span { color: var(--body-fg); }
+
+.compare__list em {
+  font-style: normal;
+  color: var(--meta-fg);
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.compare__side--ours .compare__list em { color: var(--fg); }
+
+.compare__note {
+  font-family: var(--face-prose);
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  /* Prose, not metadata: --dim clears 3:1 but not the 4.5:1 body floor. */
+  color: var(--body-fg);
+}
+
+.compare__note code {
+  color: var(--fg);
+  font-size: 0.95em;
+}
+
+/* == REGION: DOES ======================================== */
+.region--does { border-top: var(--rule-w) solid var(--hair); }
+
+.row--item { padding-block: 1.5rem; align-items: start; }
+
+.row--item .row__name {
+  font-family: var(--face-prose);
+  /* Items carry prose, so the truncation rule from the data rows is off. */
+  white-space: normal;
+  overflow: visible;
+  max-width: min(68ch, 100%);
+  color: var(--body-fg);
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+.row--item .row__name b {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: var(--fg);
+  font-size: 1.02rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.row--item .row__meta,
+.row--item .row__size { padding-top: 0.25rem; }
+
+.does__caveat {
+  font-family: var(--face-prose);
+  grid-column: 1 / -1;
+  margin: 1.75rem 0 0;
+  max-width: min(62ch, 100%);
+  font-size: 0.78rem;
+  line-height: 1.7;
+  /* An honest limitation has to be legible to be honest. */
+  color: var(--body-fg);
+}
+
+/* == REGION: SCREENS ===================================== */
+.region--screens { border-top: var(--rule-w) solid var(--hair); }
+
+.screens__note {
+  font-family: var(--face-prose);
+  grid-column: 1 / -1;
+  margin: -1.5rem 0 clamp(2.25rem, 4vw, 3.25rem);
+  max-width: min(56ch, 100%);
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: var(--body-fg);
+}
+
+/* auto-fit, so one slot sits at its natural width and further captures
+   added later reflow into columns without touching this rule. */
+.screens__grid {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: clamp(1.25rem, 3vw, 2.25rem);
+}
+
+.shot { grid-column: span 1; margin: 0; }
+
+/* Empty slot and real image share one box, so swapping never reflows. */
+.shot__empty,
+.shot__img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: center;
+  border: var(--rule-w) solid var(--hair);
+  background: var(--recess);
+}
+
+.shot__empty {
+  display: grid;
+  place-items: center;
+}
+
+.shot__empty span {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: var(--meta-fg);
+}
+
+.shot__cap {
+  margin-top: 0.7rem;
+  padding-top: 0.55rem;
+  border-top: var(--rule-w) solid var(--hair);
+  font-size: 0.78rem;
+  color: var(--body-fg);
+}
+
+/* == REGION: GET ========================================= */
+.region--get { border-top: var(--rule-w) solid var(--hair); }
+
+.get__listing { margin-bottom: 1.5rem; }
+
+.row--get {
+  text-decoration: none;
+  padding-block: 1.15rem;
+  transition: background-color 140ms ease;
+}
+
+.row--get .row__name {
+  font-size: clamp(1.05rem, 2vw, 1.5rem);
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+
+.row--get:hover { background: var(--recess); }
+.row--get:hover .row__meta,
+.row--get:hover .row__size { color: var(--body-fg); }
+
+/* The download line carries the page's one signal mark. */
+.row--get:first-of-type .row__name { position: relative; padding-left: 1.4rem; }
+.row--get:first-of-type .row__name::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 0.55rem;
+  height: 0.55rem;
+  background: var(--signal);
+}
+
+.get__fine {
+  font-family: var(--face-prose);
+  grid-column: 1 / -1;
+  margin: 0;
+  max-width: min(62ch, 100%);
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: var(--body-fg);
+}
+
+/* == REGION: COLOPHON ==================================== */
+.colophon {
+  border-top: var(--rule-w) solid var(--fg);
+  padding-block: 1.6rem;
+}
+
+.colophon__inner {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.colophon__name {
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--meta-fg);
+}
+
+/* == RESPONSIVE ========================================== */
+@media (max-width: 900px) {
+  .region--top__inner { grid-template-columns: minmax(0, 1fr); row-gap: 3rem; }
+  .top__stage { grid-column: 1 / -1; padding-top: 0; }
+  .compare { grid-template-columns: minmax(0, 1fr); row-gap: 2.5rem; }
+  .compare__side--ours { padding-left: 0; border-left: 0; padding-top: 2rem;
+                          border-top: var(--rule-w) solid var(--hair); }
+}
+
+@media (max-width: 680px) {
+  /* Three columns become one; metadata drops beneath the name and the
+     vertical rules switch off, since there are no longer columns to divide. */
+  :root { --col-meta: auto; --col-size: auto; }
+
+  .idx,
+  .row,
+  .masthead__inner,
+  .screens__grid,
+  .compare { grid-template-columns: minmax(0, 1fr); }
+
+  /* A wordmark and one link: no reason to stack. */
+  .colophon__inner { grid-template-columns: minmax(0, 1fr) auto; }
+
+  .region, .ruled { background-image: none; }
+
+  .row { row-gap: 0.25rem; }
+
+  .row__meta,
+  .row__size {
+    text-align: left;
+    grid-column: 1;
+  }
+
+  .row--head .row__meta,
+  .row--head .row__size { display: none; }
+
+  .row--item .row__meta,
+  .row--item .row__size { display: inline; padding-top: 0; }
+
+  .screens__grid { gap: 1.75rem; }
+
+  .masthead__inner { row-gap: 0.4rem; padding-block: 0.6rem; }
+  .masthead__nav { flex-wrap: wrap; gap: 0.9rem 1.1rem; }
+
+  .device { width: 100%; max-width: 268px; }
+  .device__wheel { width: 150px; height: 150px; }
+  .device__center { width: 58px; height: 58px; }
+
+  /* The rotated chassis is wider than its own box, so on a narrow screen it
+     ran off the right edge. Facing the viewer at this size costs nothing —
+     there is no room for a three-quarter view to read as one anyway. */
+  .device {
+    --rx: 0deg;
+    --ry: 0deg;
+    --depth: 7px;
+  }
+
+  .stage { perspective: none; }
+
+  /* Long unbroken strings — paths, filenames, the hero's second line — are the
+     one thing on this page that can exceed a 390px column. Let them break. */
+  /* Paths and filenames are the only strings here with no natural break. */
+  .row__name,
+  .compare__list em { overflow-wrap: anywhere; }
+
+  /* Truncating to one line needs a width to truncate against; in a single
+     column with no fixed tracks the ellipsis never triggers and the name
+     pushes the row wide instead. */
+  .row__name { white-space: normal; text-overflow: clip; }
+}
+
+@media (max-width: 380px) {
+  .masthead__nav { gap: 0.7rem 0.85rem; }
+  .entry { font-size: 0.72rem; }
+}
+
+/* == LIGHT BAND OVERRIDES ================================ */
+/* Only what genuinely cannot follow the role tokens. Anything driven by
+   --fg / --hair / --body-fg already inverts on its own. */
+
+/* The masthead sits above whichever band is under it, so its blur mix and its
+   bottom rule have to follow the band the page is currently scrolled onto. */
+.masthead {
+  transition: background-color 260ms ease, border-color 260ms ease;
+}
+
+/* A light band's row heads and major boundaries read as ink, not as ivory. */
+.band--lit .row--head { border-bottom-color: var(--fg); }
+
+/* The device lives only in the dark top region, so it has no light-band form.
+   If it is ever placed on a light band it needs a dark shell and a shorter
+   cast shadow, or it dissolves into the ground — that variant is not written
+   here because unused states rot. */
+
+/* The signal square is ink on a light band, so the download row's hover fill
+   must not swallow it. */
+.band--lit .row--get:hover { background: var(--recess); }
+
+/* Prose inside a light band takes the darker body value; code marks take ink. */
+.band--lit .compare__note code,
+.band--lit .compare__side--ours .compare__list em { color: var(--fg); }
+
+/* The empty screenshot slot is a recessed panel in both bands. */
+.band--lit .shot__empty { background: var(--recess); border-color: var(--hair); }

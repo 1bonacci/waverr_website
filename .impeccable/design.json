@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-22T00:00:00Z",
+  "title": "Design System: waverr",
+  "extensions": {
+    "colorMeta": {
+      "live": { "role": "primary", "displayName": "Signal Grey", "canonical": "#c8c8c2", "tonalRamp": ["#181817", "#2f2f2d", "#474744", "#5f5f5c", "#787873", "#9a9a95", "#c8c8c2", "#f0f0ec"] },
+      "ink": { "role": "neutral", "displayName": "Night Ground", "canonical": "#0b0b0b", "tonalRamp": ["#000000", "#0b0b0b", "#1b1b1b", "#2e2e2e", "#4a4a4a", "#6e6e6e", "#9c9c9c", "#d6d6d6"] },
+      "ink-2": { "role": "neutral", "displayName": "Recessed Ground", "canonical": "#121212", "tonalRamp": ["#000000", "#0b0b0b", "#121212", "#262626", "#434343", "#696969", "#989898", "#d4d4d4"] },
+      "rule": { "role": "neutral", "displayName": "Hairline", "canonical": "#262626", "tonalRamp": ["#0b0b0b", "#161616", "#262626", "#3a3a3a", "#535353", "#757575", "#a0a0a0", "#d8d8d8"] },
+      "dim": { "role": "neutral", "displayName": "Metadata Grey", "canonical": "#5f5f5c", "tonalRamp": ["#141413", "#232322", "#343433", "#484846", "#5f5f5c", "#83837f", "#adada8", "#dedeD9"] },
+      "mid": { "role": "neutral", "displayName": "Body Grey", "canonical": "#9a9a95", "tonalRamp": ["#1a1a19", "#2c2c2b", "#43433f", "#5c5c58", "#787874", "#9a9a95", "#c1c1bc", "#e9e9e5"] },
+      "paper": { "role": "neutral", "displayName": "Ivory", "canonical": "#e8e8e6", "tonalRamp": ["#1d1d1c", "#31312f", "#494946", "#646460", "#82827e", "#a5a5a0", "#c8c8c4", "#e8e8e6"] },
+      "lcd-ground": { "role": "tertiary", "displayName": "LCD Ground", "canonical": "#0d0f0e", "tonalRamp": ["#000000", "#0d0f0e", "#1e2321", "#333a37", "#4d5652", "#6b7671", "#96a09b", "#d4dbd8"] },
+      "lcd-text": { "role": "tertiary", "displayName": "LCD Text", "canonical": "#d4dbd8", "tonalRamp": ["#0d0f0e", "#1e2321", "#333a37", "#4d5652", "#6b7671", "#8e9a95", "#b4beba", "#d4dbd8"] },
+      "lcd-dim": { "role": "tertiary", "displayName": "LCD Row", "canonical": "#9aa6a1", "tonalRamp": ["#0d0f0e", "#1e2321", "#333a37", "#4d5652", "#6b7671", "#8e9a95", "#9aa6a1", "#c6cfcb"] },
+      "lcd-chrome": { "role": "tertiary", "displayName": "LCD Chrome", "canonical": "#79857f", "tonalRamp": ["#0d0f0e", "#1a201d", "#2b332f", "#404a46", "#5a655f", "#79857f", "#a0aaa5", "#cdd4d1"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "The page title only, set as a two-line listing entry at display scale." },
+      "headline": { "displayName": "Headline", "purpose": "Section leads, capped at 24ch." },
+      "title": { "displayName": "Title", "purpose": "The bolded first line of a capability row." },
+      "listing": { "displayName": "Listing", "purpose": "The document base; row names and the whole index." },
+      "body": { "displayName": "Body", "purpose": "Running prose in Geist Mono only. Never used for chrome." },
+      "meta": { "displayName": "Meta", "purpose": "Right-aligned folder and size columns; never wraps." },
+      "label": { "displayName": "Label", "purpose": "Listing header rows and comparison column headers, uppercase." },
+      "entry": { "displayName": "Entry", "purpose": "Every link that acts as an action." },
+      "wordmark": { "displayName": "Wordmark", "purpose": "The lowercase name in masthead and colophon, widely tracked." }
+    },
+    "shadows": [
+      { "name": "device-cast", "value": "0 34px 70px rgba(0,0,0,.66), 0 8px 22px rgba(0,0,0,.42)", "purpose": "The only shadow in page chrome. Wide ambient drop plus tighter contact shadow, on the depicted device alone." },
+      { "name": "lcd-recess", "value": "0 2px 8px rgba(0,0,0,.45) inset", "purpose": "Sinks the LCD into the device chassis." }
+    ],
+    "motion": [
+      { "name": "state-transition", "value": "140ms ease", "purpose": "The page's only transition duration: entry colour and border-colour, download row background." },
+      { "name": "viz-cycle", "value": "820ms ease-in-out infinite alternate", "purpose": "Base visualizer bar keyframe; per-bar duration randomized 460-1080ms with negative delay so the block reads as audio, not loading." },
+      { "name": "reduced-motion", "value": "animation: none; transition: none", "purpose": "All animation and transition are hard-disabled under prefers-reduced-motion, and smooth scroll reverts to auto." }
+    ],
+    "breakpoints": [
+      { "name": "page", "value": "1240px" },
+      { "name": "stack", "value": "900px" },
+      { "name": "single-column", "value": "680px" },
+      { "name": "narrow", "value": "380px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Entry",
+      "kind": "button",
+      "refersTo": "entry",
+      "description": "The page's only action form: a listing link with a hairline underline on approach. Never a pill or filled rectangle.",
+      "html": "<a class=\"ds-entry\" href=\"#\">read the source</a>",
+      "css": ".ds-entry { font-family: \"Departure Mono\", ui-monospace, monospace; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: #5f5f5c; text-decoration: none; padding-block: 0.15rem; border-bottom: 1px solid transparent; transition: color 140ms ease, border-color 140ms ease; } .ds-entry:hover { color: #e8e8e6; border-bottom-color: #e8e8e6; } .ds-entry:focus-visible { outline: 1px solid #c8c8c2; outline-offset: 3px; }"
+    },
+    {
+      "name": "Entry (live)",
+      "kind": "button",
+      "refersTo": "entry-live",
+      "description": "The download variant. Ivory text over a Signal Grey underline at rest; the underline goes ivory on hover.",
+      "html": "<a class=\"ds-entry-live\" href=\"#\">download for windows</a>",
+      "css": ".ds-entry-live { font-family: \"Departure Mono\", ui-monospace, monospace; font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; color: #e8e8e6; text-decoration: none; padding-block: 0.15rem; border-bottom: 1px solid #c8c8c2; transition: color 140ms ease, border-color 140ms ease; } .ds-entry-live:hover { border-bottom-color: #e8e8e6; } .ds-entry-live:focus-visible { outline: 1px solid #c8c8c2; outline-offset: 3px; }"
+    },
+    {
+      "name": "Entry (pending)",
+      "kind": "button",
+      "refersTo": "entry-pending",
+      "description": "Live shipped state while the repo/release constants still hold their placeholder: href stripped, aria-disabled set, ' (soon)' appended.",
+      "html": "<a class=\"ds-entry-pending\" aria-disabled=\"true\" title=\"Link not configured yet\">download</a>",
+      "css": ".ds-entry-pending { font-family: \"Departure Mono\", ui-monospace, monospace; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: #5f5f5c; text-decoration: none; padding-block: 0.15rem; border-bottom: 1px solid transparent; cursor: not-allowed; } .ds-entry-pending::after { content: \" (soon)\"; font-size: 0.85em; color: #5f5f5c; }"
+    },
+    {
+      "name": "Listing Row",
+      "kind": "custom",
+      "refersTo": "row",
+      "description": "The system's answer to a card. Three columns (name / 13ch meta / 9ch size), baseline-aligned, one bottom hairline, no fill.",
+      "html": "<div class=\"ds-idx\"><div class=\"ds-row ds-row-head\"><span class=\"ds-row-name\">Name</span><span class=\"ds-row-meta\">Folder</span><span class=\"ds-row-size\">Size</span></div><div class=\"ds-row\"><span class=\"ds-row-name\">beat_v3.wav</span><span class=\"ds-row-meta\">sketches</span><span class=\"ds-row-size\">52.7 MB</span></div></div>",
+      "css": ".ds-idx { display: grid; grid-template-columns: minmax(0, 1fr) 13ch 9ch; column-gap: clamp(1rem, 2.4vw, 2rem); background: #0b0b0b; font-family: \"Departure Mono\", ui-monospace, monospace; font-size: 15px; line-height: 1.55; } .ds-row { display: grid; grid-column: 1 / -1; grid-template-columns: subgrid; align-items: baseline; padding-block: 0.62rem; border-bottom: 1px solid #262626; } @supports not (grid-template-columns: subgrid) { .ds-row { grid-template-columns: minmax(0, 1fr) 13ch 9ch; } } .ds-row-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #9a9a95; } .ds-row-meta, .ds-row-size { text-align: right; color: #5f5f5c; font-size: 0.8rem; letter-spacing: 0.02em; white-space: nowrap; } .ds-row-head { border-bottom-color: #e8e8e6; padding-block: 0.5rem; } .ds-row-head .ds-row-name, .ds-row-head .ds-row-meta, .ds-row-head .ds-row-size { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: #5f5f5c; }"
+    },
+    {
+      "name": "Listing Row (playing)",
+      "kind": "custom",
+      "refersTo": "row-playing",
+      "description": "The page's one signal state: ivory name, inset by 1.3rem, marked with a filled Signal Grey square.",
+      "html": "<div class=\"ds-idx2\"><div class=\"ds-row-playing\"><span class=\"ds-rp-name\">idea_140bpm.wav</span><span class=\"ds-rp-meta\">sketches</span><span class=\"ds-rp-size\">38.1 MB</span></div></div>",
+      "css": ".ds-idx2 { display: grid; grid-template-columns: minmax(0, 1fr) 13ch 9ch; column-gap: clamp(1rem, 2.4vw, 2rem); background: #0b0b0b; font-family: \"Departure Mono\", ui-monospace, monospace; font-size: 15px; line-height: 1.55; } .ds-row-playing { display: grid; grid-column: 1 / -1; grid-template-columns: subgrid; align-items: baseline; padding-block: 0.62rem; border-bottom: 1px solid #262626; } .ds-rp-name { position: relative; padding-left: 1.3rem; color: #e8e8e6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .ds-rp-name::before { content: \"\"; position: absolute; left: 0; top: 0.44em; width: 0.5rem; height: 0.5rem; background: #c8c8c2; } .ds-rp-meta, .ds-rp-size { text-align: right; color: #9a9a95; font-size: 0.8rem; letter-spacing: 0.02em; white-space: nowrap; }"
+    },
+    {
+      "name": "Download Row",
+      "kind": "custom",
+      "refersTo": "row-get",
+      "description": "The primary action as a permanent listing entry, not a floating pill. Larger name, Signal Grey mark, recessed fill on hover.",
+      "html": "<div class=\"ds-idx3\"><a class=\"ds-row-get\" href=\"#\"><span class=\"ds-rg-name\">waverr installer</span><span class=\"ds-rg-meta\">Windows</span><span class=\"ds-rg-size\">free</span></a></div>",
+      "css": ".ds-idx3 { display: grid; grid-template-columns: minmax(0, 1fr) 13ch 9ch; column-gap: clamp(1rem, 2.4vw, 2rem); background: #0b0b0b; font-family: \"Departure Mono\", ui-monospace, monospace; line-height: 1.55; } .ds-row-get { display: grid; grid-column: 1 / -1; grid-template-columns: subgrid; align-items: baseline; padding-block: 1.15rem; border-bottom: 1px solid #262626; text-decoration: none; transition: background-color 140ms ease; } .ds-rg-name { position: relative; padding-left: 1.4rem; font-size: clamp(1.05rem, 2vw, 1.5rem); letter-spacing: -0.02em; color: #e8e8e6; } .ds-rg-name::before { content: \"\"; position: absolute; left: 0; top: 0.5em; width: 0.55rem; height: 0.55rem; background: #c8c8c2; } .ds-rg-meta, .ds-rg-size { text-align: right; color: #5f5f5c; font-size: 0.8rem; letter-spacing: 0.02em; } .ds-row-get:hover { background: #121212; } .ds-row-get:hover .ds-rg-meta, .ds-row-get:hover .ds-rg-size { color: #9a9a95; } .ds-row-get:focus-visible { outline: 1px solid #c8c8c2; outline-offset: 3px; }"
+    },
+    {
+      "name": "Masthead",
+      "kind": "nav",
+      "refersTo": "entry",
+      "description": "Sticky translucent masthead with backdrop blur and an ivory bottom rule; wordmark left, entries right.",
+      "html": "<header class=\"ds-masthead\"><a class=\"ds-mast-name\" href=\"#\">waverr</a><nav class=\"ds-mast-nav\"><a class=\"ds-entry2\" href=\"#\">why</a><a class=\"ds-entry2\" href=\"#\">screens</a><a class=\"ds-entry2 ds-entry2-live\" href=\"#\">download</a></nav></header>",
+      "css": ".ds-masthead { position: sticky; top: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; min-height: 46px; padding-inline: clamp(1rem, 2.4vw, 2rem); background: color-mix(in srgb, #0b0b0b 88%, transparent); backdrop-filter: blur(6px); border-bottom: 1px solid #e8e8e6; font-family: \"Departure Mono\", ui-monospace, monospace; } .ds-mast-name { font-size: 0.86rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; color: #e8e8e6; } .ds-mast-nav { display: flex; gap: 1.6rem; align-items: center; } .ds-entry2 { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: #5f5f5c; text-decoration: none; padding-block: 0.15rem; border-bottom: 1px solid transparent; transition: color 140ms ease, border-color 140ms ease; } .ds-entry2:hover { color: #e8e8e6; border-bottom-color: #e8e8e6; } .ds-entry2-live { color: #e8e8e6; border-bottom-color: #c8c8c2; } .ds-entry2-live:hover { border-bottom-color: #e8e8e6; }"
+    },
+    {
+      "name": "Image Slot",
+      "kind": "card",
+      "refersTo": "shot-slot",
+      "description": "A fixed 16:10 hairline-bordered box. Empty placeholder and real image share the box so swapping never reflows. Placeholders are labelled honestly.",
+      "html": "<figure class=\"ds-shot\"><div class=\"ds-shot-empty\"><span>ALL TRACKS</span></div><figcaption class=\"ds-shot-cap\">Every indexed file in one list, the folder shown on every row.</figcaption></figure>",
+      "css": ".ds-shot { margin: 0; background: #0b0b0b; font-family: \"Departure Mono\", ui-monospace, monospace; } .ds-shot-empty { display: grid; place-items: center; width: 100%; aspect-ratio: 16 / 10; border: 1px solid #262626; background: #121212; } .ds-shot-empty span { font-size: 0.7rem; letter-spacing: 0.18em; color: #5f5f5c; } .ds-shot-cap { margin-top: 0.7rem; padding-top: 0.55rem; border-top: 1px solid #262626; font-size: 0.78rem; color: #9a9a95; }"
+    },
+    {
+      "name": "The Device",
+      "kind": "custom",
+      "refersTo": "device",
+      "description": "The signature component and the page's only curved, light, shadowed object: ivory chassis, phosphor LCD, circular click wheel with SVG transport marks.",
+      "html": "<div class=\"ds-device\" role=\"img\" aria-label=\"The waverr player: a white handheld device with an LCD showing a track list and a visualizer, above a click wheel.\"><div class=\"ds-dev-screen\"><div class=\"ds-dev-bar\"><span>ALL TRACKS</span><span class=\"ds-dev-cell\"></span></div><ul class=\"ds-dev-list\"><li class=\"ds-dev-row ds-dev-row-on\">idea_140bpm.wav</li><li class=\"ds-dev-row\">beat_v3.wav</li><li class=\"ds-dev-row\">vox_take7.mp3</li></ul><div class=\"ds-dev-viz\" aria-hidden=\"true\"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class=\"ds-dev-wheel\"><span class=\"ds-dev-menu\">MENU</span><svg class=\"ds-dev-mark ds-dev-mark-prev\" viewBox=\"0 0 24 12\" aria-hidden=\"true\"><path d=\"M11 1 3 6l8 5V1Z\"/><path d=\"M21 1l-8 5 8 5V1Z\"/></svg><svg class=\"ds-dev-mark ds-dev-mark-next\" viewBox=\"0 0 24 12\" aria-hidden=\"true\"><path d=\"M3 1l8 5-8 5V1Z\"/><path d=\"M13 1l8 5-8 5V1Z\"/></svg><svg class=\"ds-dev-mark ds-dev-mark-play\" viewBox=\"0 0 28 12\" aria-hidden=\"true\"><path d=\"M4 1l8 5-8 5V1Z\"/><rect x=\"17\" y=\"1\" width=\"3\" height=\"10\"/><rect x=\"23\" y=\"1\" width=\"3\" height=\"10\"/></svg><div class=\"ds-dev-center\"></div></div></div>",
+      "css": ".ds-device { width: min(318px, 100%); padding: 20px 20px 28px; border-radius: 24px; background: #e8e8e6; box-shadow: 0 34px 70px rgba(0,0,0,.66), 0 8px 22px rgba(0,0,0,.42); font-family: \"Departure Mono\", ui-monospace, monospace; } .ds-dev-screen { background: #0d0f0e; border-radius: 5px; padding: 9px 10px 7px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,.45) inset; color: #d4dbd8; font-size: 0.66rem; } .ds-dev-bar { display: flex; justify-content: space-between; align-items: center; font-size: 0.56rem; letter-spacing: 0.16em; color: #79857f; padding-bottom: 5px; margin-bottom: 6px; border-bottom: 1px solid #1e2321; } .ds-dev-cell { width: 15px; height: 7px; border: 1px solid #79857f; position: relative; } .ds-dev-cell::before { content: \"\"; position: absolute; inset: 1px; right: 5px; background: #79857f; } .ds-dev-list { list-style: none; margin: 0 0 8px; padding: 0; } .ds-dev-row { padding: 2px 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #9aa6a1; } .ds-dev-row-on { background: #d4dbd8; color: #0d0f0e; } .ds-dev-viz { display: flex; align-items: flex-end; gap: 2px; height: 30px; padding-top: 6px; border-top: 1px solid #1e2321; } .ds-dev-viz i { flex: 1; height: 14%; background: #8e9a95; animation: ds-viz 820ms ease-in-out infinite alternate; } @keyframes ds-viz { from { height: 10%; } to { height: 100%; } } .ds-dev-wheel { position: relative; width: 186px; height: 186px; margin: 0 auto; border-radius: 50%; background: #dcdcd9; } .ds-dev-center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 70px; height: 70px; border-radius: 50%; background: #e8e8e6; } .ds-dev-menu { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); font-size: 0.54rem; letter-spacing: 0.14em; color: #86868a; } .ds-dev-mark { position: absolute; width: 22px; fill: #86868a; } .ds-dev-mark-prev { left: 13px; top: 50%; transform: translateY(-50%); } .ds-dev-mark-next { right: 13px; top: 50%; transform: translateY(-50%); } .ds-dev-mark-play { bottom: 12px; left: 50%; transform: translateX(-50%); width: 26px; } @media (prefers-reduced-motion: reduce) { .ds-dev-viz i { animation: none !important; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Directory Index",
+    "overview": "This is a file listing that happens to be a marketing page. Structure comes from a three-column grid, hairline rules and rows — name on the left, metadata right-aligned in a fixed column — and from nothing else. There is no card on this page, no panel, no rounded surface anywhere except the one object that is supposed to be an object. The page ground is near-black because the use scene is: a producer at their desk at night with the monitor the brightest thing in the room.\n\nThe palette is a deliberate monochrome — a near-black ground, a recessed ground one step up, four greys, and one ivory — carried over as a binding brand constraint from the application's own black/grey/white chassis. Against that, the white handheld player is the single light, curved, physical thing on the page. Its presence is the entire depth budget; everything else is drawn with one-pixel hairlines at value contrast only.\n\nThe build refuses the dark-hero-plus-feature-cards arrangement. Where a card would go, a .row goes. Where a floating pill CTA would go, a permanent entry in a listing header row goes. Sections are separated by a full-width hairline at the region boundary, not by a background change, and the two vertical column rules paint on the region itself so they run continuously down the whole page rather than restarting at every section.",
+    "keyCharacteristics": [
+      "Two composable primitives — a three-column index grid and a subgrid row — and no second layout system",
+      "Two self-hosted monos with a load-bearing split: a pixel face for all chrome, a readable mono for running prose only",
+      "Continuous full-height vertical column rules, painted on the region, not per-listing",
+      "One signal colour, used for the playing state, the download row's mark, and focus",
+      "Flat by default: exactly one shadowed object on the page, and it is a depicted physical device"
+    ],
+    "rules": [
+      { "name": "The One Signal Rule", "body": "Signal Grey marks state, never decoration. If a surface is not playing, not the primary download, and not focused, it does not get the signal colour.", "section": "colors" },
+      { "name": "The Phosphor Containment Rule", "body": "The four green-tinted LCD neutrals live inside the device and nowhere else. Tinting page chrome with them turns a depicted screen into a theme.", "section": "colors" },
+      { "name": "The Prose Floor Rule", "body": "Metadata grey is for metadata. Anything the visitor reads as a sentence — lede, notes, captions, caveats, fine print — takes Body Grey or lighter.", "section": "colors" },
+      { "name": "The Two-Voice Rule", "body": "The pixel face sets listing, headings, labels and LCD. Geist Mono sets running paragraphs and nothing else. A paragraph in the pixel face, or a label in the prose face, is a violation.", "section": "typography" },
+      { "name": "The Inverse Tracking Rule", "body": "Tracking tightens as size grows and loosens as size shrinks: display at -0.045em, headline at -0.035em, meta at 0.02em, labels at 0.14em, the wordmark at 0.2em.", "section": "typography" },
+      { "name": "The Product Voice Rule", "body": "The application's own interface strings — ALL TRACKS, NOW PLAYING, QUEUE, SETTINGS, SAVE AS PLAYLIST — are set in caps verbatim, because that is how the product speaks. Nothing else on the page is upper-cased by hand; casing elsewhere comes from text-transform on labels and entries.", "section": "typography" },
+      { "name": "The Two-Primitive Rule", "body": "Every region composes from .idx and .row. New surfaces extend a variant of these; they do not introduce a second grid.", "section": "layout" },
+      { "name": "The Continuous Rule Rule", "body": "Column rules belong to the region, not the listing. A rule that starts and stops with a table is a table border, not a world.", "section": "layout" },
+      { "name": "The One Object Rule", "body": "Exactly one element on the page casts a shadow, and it is the depicted device. Page chrome — masthead, listings, regions, images — is flat and separated by hairlines and value alone.", "section": "elevation" },
+      { "name": "The No Fake Material Rule", "body": "The device is flat fills. No plastic gradients, no bevels, no simulated highlights. Physicality comes from shape, value and cast shadow.", "section": "elevation" },
+      { "name": "The Square Page Rule", "body": "Radius on the page is zero. Curvature belongs to the device and to nothing else.", "section": "shapes" },
+      { "name": "The No Button Rule", "body": "Actions are entries in a listing. A filled or pilled button does not exist in this system; the primary action lives as a permanent row in the listing it belongs to.", "section": "components" }
+    ],
+    "dos": [
+      "Do compose every new surface from .idx and a .row variant. Extending the row vocabulary is the only sanctioned way to add a pattern.",
+      "Do paint column rules on the region (.region, .ruled) so they run its full height.",
+      "Do keep the two-voice split absolute: pixel face for listing, headings, labels and LCD; Geist Mono for running paragraphs.",
+      "Do reserve Signal Grey for state — playing, primary download, focus — and let its rarity carry the meaning.",
+      "Do use Body Grey or lighter for anything read as a sentence; metadata grey is for metadata only.",
+      "Do cap prose measure (54ch lede, 56-68ch notes, 24ch headlines) and let names truncate with an ellipsis instead.",
+      "Do honour prefers-reduced-motion: all animation and transition are disabled page-wide under it, and the script declines to seed inline durations.",
+      "Do label unavailable states honestly — the pending link renders ' (soon)' rather than a dead link, and placeholder image slots say what they are waiting for.",
+      "Do set the product's own interface strings in caps verbatim, and the name in lowercase."
+    ],
+    "donts": [
+      "Don't introduce a card, panel, tile, or any bordered container with a background fill. Where a card would go, a row goes.",
+      "Don't add a filled or pilled button. Actions are entries with a hairline underline.",
+      "Don't apply radius to page chrome. Curvature belongs to the device.",
+      "Don't cast a shadow on anything other than the device. Page depth is value contrast and hairlines.",
+      "Don't give the device plastic gradients, bevels, or simulated highlights — flat fills plus the two cast shadows.",
+      "Don't let the LCD phosphor neutrals leak out of .device__* into page chrome.",
+      "Don't add a second layout system, a private flex arrangement inside a listing, or a hue outside the monochrome ramp — the black/grey/white palette is a binding brand constraint matching the application's chassis.",
+      "Don't introduce a border heavier than 1px, or a dashed/dotted stroke."
+    ]
+  }
+}
