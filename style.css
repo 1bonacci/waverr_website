@@ -383,3 +383,116 @@ img { max-width: 100%; display: block; }
 .device__mark--prev { left: 13px; top: 50%; transform: translateY(-50%); }
 .device__mark--next { right: 13px; top: 50%; transform: translateY(-50%); }
 .device__mark--play { bottom: 12px; left: 50%; transform: translateX(-50%); width: 26px; }
+
+/* == REGION: WHY ========================================= */
+.region--why { border-top: var(--rule-w) solid var(--rule); }
+
+.lead {
+  grid-column: 1 / -1;
+  margin: 0 0 clamp(2.5rem, 5vw, 4rem);
+  max-width: 24ch;
+  font-size: clamp(1.5rem, 3.2vw, 2.45rem);
+  font-weight: 500;
+  line-height: 1.16;
+  letter-spacing: -0.035em;
+}
+
+.lead__dim { color: var(--dim); }
+
+.compare {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(2rem, 5vw, 4rem);
+}
+
+.compare__side { grid-column: span 1; }
+
+/* The right-hand side is the product's answer; a single hairline on its
+   left edge marks it without turning it into a panel. */
+.compare__side--ours {
+  padding-left: clamp(1.25rem, 3vw, 2.25rem);
+  border-left: var(--rule-w) solid var(--rule);
+}
+
+.compare__label {
+  margin: 0 0 1.1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: var(--rule-w) solid var(--rule);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.compare__list { list-style: none; margin: 0 0 1.2rem; padding: 0; }
+
+.compare__list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.5rem;
+  border-bottom: var(--rule-w) solid var(--rule);
+  font-size: 0.86rem;
+}
+
+.compare__list span { color: var(--mid); }
+
+.compare__list em {
+  font-style: normal;
+  color: var(--dim);
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.compare__side--ours .compare__list em { color: var(--paper); }
+
+.compare__note {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  /* Prose, not metadata: --dim clears 3:1 but not the 4.5:1 body floor. */
+  color: var(--mid);
+}
+
+.compare__note code {
+  color: var(--paper);
+  font-size: 0.95em;
+}
+
+/* == REGION: DOES ======================================== */
+.region--does { border-top: var(--rule-w) solid var(--rule); }
+
+.row--item { padding-block: 1.5rem; align-items: start; }
+
+.row--item .row__name {
+  /* Items carry prose, so the truncation rule from the data rows is off. */
+  white-space: normal;
+  overflow: visible;
+  max-width: 68ch;
+  color: var(--mid);
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+.row--item .row__name b {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: var(--paper);
+  font-size: 1.02rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.row--item .row__meta,
+.row--item .row__size { padding-top: 0.25rem; }
+
+.does__caveat {
+  grid-column: 1 / -1;
+  margin: 1.75rem 0 0;
+  max-width: 62ch;
+  font-size: 0.78rem;
+  line-height: 1.7;
+  /* An honest limitation has to be legible to be honest. */
+  color: var(--mid);
+}

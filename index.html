@@ -134,8 +134,122 @@ the finish review, the verdict, and DESIGN.md
       </div>
     </div>
   </section>
-  <section id="why" class="region region--why"></section>
-  <section id="does" class="region region--does"></section>
+  <section id="why" class="region region--why">
+    <div class="idx">
+      <h2 class="lead">
+        Ordinary players assume you named things.<br>
+        <span class="lead__dim">You were making music, not cataloguing it.</span>
+      </h2>
+    </div>
+
+    <div class="idx compare">
+      <div class="compare__side">
+        <p class="compare__label">What a library player looks for</p>
+        <ul class="compare__list">
+          <li><span>Artist</span><em>—</em></li>
+          <li><span>Album</span><em>—</em></li>
+          <li><span>Title</span><em>—</em></li>
+          <li><span>Track no.</span><em>—</em></li>
+          <li><span>Year</span><em>—</em></li>
+        </ul>
+        <p class="compare__note">Five fields your session folder never filled in.</p>
+      </div>
+      <div class="compare__side compare__side--ours">
+        <p class="compare__label">What waverr looks for</p>
+        <ul class="compare__list">
+          <li><span>The filename</span><em>idea_140bpm.wav</em></li>
+          <li><span>The path</span><em>/beats/sept/sketches</em></li>
+        </ul>
+        <p class="compare__note">
+          Both searchable by any fragment, anywhere inside them. Type
+          <code>bpm</code> and <code>loop_140bpm.wav</code> comes back.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section id="does" class="region region--does">
+    <div class="idx">
+      <h2 class="lead">What it does, in the order you meet it.</h2>
+    </div>
+
+    <div class="idx ruled does__listing">
+      <div class="row row--head">
+        <span class="row__name">Capability</span>
+        <span class="row__meta">Where</span>
+        <span class="row__size">Key</span>
+      </div>
+
+      <article class="row row--item">
+        <span class="row__name">
+          <b>One flat list of everything</b>
+          No folder browsing. Every indexed file in a single list, sorted by
+          folder then A–Z inside it, the folder shown on every row. Skipping
+          forward walks the whole library instead of stopping at a folder's end.
+        </span>
+        <span class="row__meta">ALL TRACKS</span>
+        <span class="row__size">up / down</span>
+      </article>
+
+      <article class="row row--item">
+        <span class="row__name">
+          <b>Search that matches the middle of a word</b>
+          A trigram index over filename and path, so a fragment finds a file
+          wherever it sits in the name. Measured over 5,000 files: the slowest
+          search took four milliseconds.
+        </span>
+        <span class="row__meta">any view</span>
+        <span class="row__size">a–z 0–9</span>
+      </article>
+
+      <article class="row row--item">
+        <span class="row__name">
+          <b>A queue that respects what you asked for</b>
+          What you queue by hand stays queued when you play something else — it
+          waits its turn. A session that went well becomes permanent with
+          SAVE AS PLAYLIST.
+        </span>
+        <span class="row__meta">QUEUE</span>
+        <span class="row__size">hold OK</span>
+      </article>
+
+      <article class="row row--item">
+        <span class="row__name">
+          <b>Missing files keep their place</b>
+          Unplug the drive and nothing is forgotten. A file that disappears is
+          marked missing rather than removed, and keeps its favorites for when
+          the drive comes back.
+        </span>
+        <span class="row__meta">ALL TRACKS</span>
+        <span class="row__size">F</span>
+      </article>
+
+      <article class="row row--item">
+        <span class="row__name">
+          <b>A visualizer, because it is that kind of device</b>
+          Real-time, drawn on the LCD, with modes you cycle while it plays.
+        </span>
+        <span class="row__meta">NOW PLAYING</span>
+        <span class="row__size">V</span>
+      </article>
+
+      <article class="row row--item">
+        <span class="row__name">
+          <b>The formats that come out of a session</b>
+          MP3, WAV, FLAC, M4A, AAC, OGG, Opus, AIFF and WMA are indexed and
+          searchable. Playback is verified on MP3, WAV, M4A and OGG.
+        </span>
+        <span class="row__meta">SETTINGS</span>
+        <span class="row__size">—</span>
+      </article>
+    </div>
+
+    <div class="idx">
+      <p class="does__caveat">
+        AIFF files are indexed and searchable, but Chromium cannot decode them,
+        so they will not play. Said here rather than discovered later.
+      </p>
+    </div>
+  </section>
   <section id="screens" class="region region--screens"></section>
   <section id="get" class="region region--get"></section>
 </main>
