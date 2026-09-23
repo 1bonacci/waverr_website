@@ -1,0 +1,138 @@
+/* == TOKENS ============================================== */
+@font-face {
+  font-family: "Geist Mono";
+  src: url("assets/fonts/GeistMono%5Bwght%5D.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* The use scene decides this: a producer at their desk at night, room
+     lights low, monitor the brightest thing present. The page is dark
+     because the room is. */
+  --ink:    #0b0b0b;   /* page ground */
+  --ink-2:  #121212;   /* recessed ground */
+  --rule:   #262626;   /* hairlines */
+  --dim:    #5f5f5c;   /* metadata, inactive */
+  --mid:    #9a9a95;   /* body copy */
+  --paper:  #e8e8e6;   /* primary text, the device body */
+  --live:   #c8c8c2;   /* the one signal: playing, focus */
+
+  --col-meta: 13ch;    /* right-aligned metadata column */
+  --col-size: 9ch;     /* right-aligned size column */
+  --gut:      clamp(1rem, 2.4vw, 2rem);
+  --rule-w:   1px;
+  --page:     1240px;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.55;
+  font-variant-ligatures: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+img { max-width: 100%; display: block; }
+
+:focus-visible {
+  outline: 1px solid var(--live);
+  outline-offset: 3px;
+}
+
+/* == INDEX PRIMITIVES ==================================== */
+/* Every region composes from these two. There is no second
+   layout system on this page and no card anywhere. */
+
+.idx {
+  width: 100%;
+  max-width: var(--page);
+  margin-inline: auto;
+  padding-inline: var(--gut);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--col-meta) var(--col-size);
+  column-gap: var(--gut);
+}
+
+/* A listing line. Its bottom hairline is the page's only divider. */
+.row {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: baseline;
+  padding-block: 0.62rem;
+  border-bottom: var(--rule-w) solid var(--rule);
+}
+
+@supports not (grid-template-columns: subgrid) {
+  .row {
+    grid-template-columns: minmax(0, 1fr) var(--col-meta) var(--col-size);
+  }
+}
+
+.row__name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row__meta,
+.row__size {
+  text-align: right;
+  color: var(--dim);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.row--head {
+  border-bottom-color: var(--paper);
+  padding-block: 0.5rem;
+}
+
+.row--head .row__name,
+.row--head .row__meta,
+.row--head .row__size {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* Vertical column rules: the page's structural signature. Drawn as a
+   repeating background on the region so they run its full height,
+   independent of how many rows it holds. */
+.ruled {
+  background-image:
+    linear-gradient(var(--rule), var(--rule)),
+    linear-gradient(var(--rule), var(--rule));
+  background-size: var(--rule-w) 100%, var(--rule-w) 100%;
+  background-repeat: no-repeat;
+  background-position:
+    calc(100% - var(--gut) - var(--col-size) - var(--gut) / 2) 0,
+    calc(100% - var(--gut) - var(--col-size) - var(--col-meta) - var(--gut) * 1.5) 0;
+}
+
+.region { padding-block: clamp(3.5rem, 7vw, 6rem); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
