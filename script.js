@@ -12,3 +12,15 @@ const RELEASE_URL = 'https://github.com/REPLACE_ME/waverr/releases';
     if (url) el.href = url;
   });
 })();
+
+/* Each bar gets its own rhythm; a synchronized block reads as a loading
+   animation rather than audio. Skipped under reduced motion so no inline
+   duration outlives the CSS that freezes it. */
+(function seedVisualizer() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  document.querySelectorAll('.device__viz i').forEach(function (bar) {
+    bar.style.animationDuration = (460 + Math.random() * 620).toFixed(0) + 'ms';
+    bar.style.animationDelay = '-' + (Math.random() * 900).toFixed(0) + 'ms';
+  });
+})();
