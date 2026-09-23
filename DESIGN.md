@@ -9,10 +9,18 @@ colors:
   mid: "#9a9a95"
   paper: "#e8e8e6"
   live: "#c8c8c2"
+  # Device-local values. These exist only inside .device__* and are
+  # deliberately not page tokens: the player is the one object on the page
+  # with its own material, and its LCD carries a faint phosphor tint that
+  # the page palette must never pick up.
   lcd-ground: "#0d0f0e"
   lcd-text: "#d4dbd8"
   lcd-dim: "#9aa6a1"
   lcd-chrome: "#79857f"
+  lcd-rule: "#1e2321"
+  lcd-bar: "#8e9a95"
+  device-wheel: "#dcdcd9"
+  device-mark: "#86868a"
 typography:
   display:
     fontFamily: "Departure Mono, ui-monospace, monospace"
@@ -68,6 +76,27 @@ typography:
     fontWeight: 500
     lineHeight: 1.55
     letterSpacing: "0.2em"
+  # Device-local steps. A handheld LCD sets type smaller than any page-level
+  # step, so these sit below the ramp on purpose and apply only inside
+  # .device__*. Do not use them for page copy.
+  device-screen:
+    fontFamily: "Departure Mono, ui-monospace, monospace"
+    fontSize: "0.66rem"
+    fontWeight: 400
+    lineHeight: 1.55
+    letterSpacing: "normal"
+  device-statusbar:
+    fontFamily: "Departure Mono, ui-monospace, monospace"
+    fontSize: "0.56rem"
+    fontWeight: 400
+    lineHeight: 1.55
+    letterSpacing: "0.16em"
+  device-wheel-label:
+    fontFamily: "Departure Mono, ui-monospace, monospace"
+    fontSize: "0.54rem"
+    fontWeight: 400
+    lineHeight: 1.55
+    letterSpacing: "0.14em"
 rounded:
   none: "0"
   lcd: "5px"
