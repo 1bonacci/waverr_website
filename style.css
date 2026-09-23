@@ -136,3 +136,54 @@ img { max-width: 100%; display: block; }
     transition: none !important;
   }
 }
+
+/* == REGION: MASTHEAD ==================================== */
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--ink) 88%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: var(--rule-w) solid var(--paper);
+}
+
+.masthead__inner {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  min-height: 46px;
+}
+
+.masthead__name {
+  font-size: 0.86rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.masthead__nav {
+  display: flex;
+  gap: 1.6rem;
+  align-items: center;
+}
+
+/* The page's only action form: a listing entry, underlined on approach.
+   Not a pill, not a filled rectangle. */
+.entry {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+  text-decoration: none;
+  padding-block: 0.15rem;
+  border-bottom: var(--rule-w) solid transparent;
+  transition: color 140ms ease, border-color 140ms ease;
+}
+
+.entry:hover { color: var(--paper); border-bottom-color: var(--paper); }
+
+.entry--live {
+  color: var(--paper);
+  border-bottom-color: var(--live);
+}
+.entry--live:hover { border-bottom-color: var(--paper); }
