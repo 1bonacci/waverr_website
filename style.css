@@ -187,3 +187,80 @@ img { max-width: 100%; display: block; }
   border-bottom-color: var(--live);
 }
 .entry--live:hover { border-bottom-color: var(--paper); }
+
+/* == REGION: TOP ========================================= */
+.region--top { padding-top: clamp(2.5rem, 5vw, 4rem); padding-bottom: 0; }
+
+.region--top__inner {
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  align-items: start;
+  column-gap: clamp(2rem, 5vw, 4.5rem);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.top__title {
+  margin: 0 0 1.6rem;
+  font-size: clamp(2.3rem, 6.2vw, 4.6rem);
+  font-weight: 500;
+  line-height: 1.02;
+  /* Tracking tightens as size grows — the world's type rule. */
+  letter-spacing: -0.045em;
+}
+
+.top__path { color: var(--dim); }
+
+.top__lede {
+  margin: 0 0 2rem;
+  max-width: 54ch;
+  color: var(--mid);
+  font-size: clamp(0.92rem, 1.1vw, 1.02rem);
+  line-height: 1.7;
+}
+
+.top__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.top__actions .entry { font-size: 0.82rem; }
+
+.top__fine {
+  margin: 0;
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  color: var(--dim);
+}
+
+.top__stage { grid-column: 2; }
+
+.top__listing { border-top: var(--rule-w) solid var(--rule); }
+
+/* The one signal on the page: the row that is playing. */
+.row--playing .row__name {
+  color: var(--paper);
+  position: relative;
+  padding-left: 1.3rem;
+}
+
+.row--playing .row__name::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.44em;
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--live);
+}
+
+.row--playing .row__meta,
+.row--playing .row__size { color: var(--mid); }
+
+.row:not(.row--head):not(.row--more):not(.row--playing) .row__name { color: var(--mid); }
+
+.row--more {
+  border-bottom-color: transparent;
+}
+.row--more .row__name,
+.row--more .row__meta { color: var(--dim); font-size: 0.8rem; }
