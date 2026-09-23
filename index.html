@@ -67,17 +67,21 @@ the finish review, the verdict, and DESIGN.md
       </div>
       <div class="top__stage stage">
         <div class="stage__device device" role="img"
-             aria-label="The waverr player: a white handheld device with an LCD showing a track list and a visualizer, above a click wheel.">
+             aria-label="The waverr player: a white handheld device with a screen showing the Home menu — All Tracks, Recent, Favorites, Playlists, Queue — above a click wheel with MENU and an OK button.">
+          <span class="device__edge device__edge--side" aria-hidden="true"></span>
+          <span class="device__edge device__edge--foot" aria-hidden="true"></span>
+          <div class="device__face">
           <div class="device__screen">
             <div class="device__bar">
-              <span>ALL TRACKS</span>
+              <span>HOME</span>
               <span class="device__cell"></span>
             </div>
             <ul class="device__list">
-              <li class="device__row device__row--on">idea_140bpm.wav</li>
-              <li class="device__row">beat_v3.wav</li>
-              <li class="device__row">demo_final_FINAL.wav</li>
-              <li class="device__row">vox_take7.mp3</li>
+              <li class="device__row device__row--on"><span>All Tracks</span><em class="device__chev">&rsaquo;</em></li>
+              <li class="device__row"><span>Recent</span><em class="device__chev">&rsaquo;</em></li>
+              <li class="device__row"><span>Favorites</span><em class="device__chev">&rsaquo;</em></li>
+              <li class="device__row"><span>Playlists</span><em class="device__chev">&rsaquo;</em></li>
+              <li class="device__row"><span>Queue</span><em class="device__chev">&rsaquo;</em></li>
             </ul>
             <div class="device__viz" aria-hidden="true">
               <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
@@ -97,7 +101,8 @@ the finish review, the verdict, and DESIGN.md
             <svg class="device__mark device__mark--play" viewBox="0 0 28 12" aria-hidden="true">
               <path d="M4 1l8 5-8 5V1Z"/><rect x="17" y="1" width="3" height="10"/><rect x="23" y="1" width="3" height="10"/>
             </svg>
-            <div class="device__center"></div>
+            <div class="device__center">OK</div>
+          </div>
           </div>
         </div>
       </div>
@@ -136,7 +141,7 @@ the finish review, the verdict, and DESIGN.md
       </div>
     </div>
   </section>
-  <section id="why" class="region region--why">
+  <section id="why" class="region region--why band--lit">
     <div class="idx">
       <h2 class="lead">
         Ordinary players assume you named things.<br>
@@ -252,7 +257,7 @@ the finish review, the verdict, and DESIGN.md
       </p>
     </div>
   </section>
-  <section id="screens" class="region region--screens">
+  <section id="screens" class="region region--screens band--lit">
     <div class="idx">
       <h2 class="lead">One screen, so you know what you are getting.</h2>
       <p class="screens__note">
@@ -263,7 +268,7 @@ the finish review, the verdict, and DESIGN.md
 
     <div class="idx screens__grid">
       <figure class="shot">
-        <div class="shot__empty"><span>ALL TRACKS</span></div>
+        <div class="shot__empty"><span>HOME</span></div>
         <figcaption class="shot__cap">
           Every indexed file in one list, the folder shown on every row.
         </figcaption>
@@ -278,7 +283,7 @@ the finish review, the verdict, and DESIGN.md
       To show more than one, copy the whole <figure> block; the grid reflows.
     -->
   </section>
-  <section id="get" class="region region--get">
+  <section id="get" class="region region--get band--lit">
     <div class="idx">
       <h2 class="lead">Point it at a folder and press play.</h2>
     </div>
