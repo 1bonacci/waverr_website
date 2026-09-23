@@ -6,6 +6,7 @@
 <title>waverr — index of a folder you already have</title>
 <meta name="description" content="waverr indexes your project folders and plays untagged WAVs and MP3s through a click-wheel device drawn on screen. Free and open source, for Windows.">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/DepartureMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/GeistMono%5Bwght%5D.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -15,8 +16,9 @@ THESIS: This page is a directory listing of one program. It refuses the
 dark-hero-plus-feature-cards arrangement every developer tool ships;
 structure comes from columns, rules and rows, never from cards.
 
-OWN-WORLD: Near-black ground, four greys, one ivory. Geist Mono at every
-size, tracking tightening as size grows. Hairline column rules that run
+OWN-WORLD: Near-black ground, four greys, one ivory. Two monos: Departure
+Mono, a pixel face from early CLI screens, sets the listing, headings and
+labels; Geist Mono sets running prose only. Hairline column rules that run
 the full page height. Rows with name left, metadata right-aligned in a
 fixed column. The player is the only curved, light, physical object on
 the page.
@@ -204,7 +206,7 @@ the finish review, the verdict, and DESIGN.md
       <article class="row row--item">
         <span class="row__name">
           <b>A queue that respects what you asked for</b>
-          What you queue by hand stays queued when you play something else — it
+          What you queue by hand stays queued when you play something else. It
           waits its turn. A session that went well becomes permanent with
           SAVE AS PLAYLIST.
         </span>
@@ -250,10 +252,80 @@ the finish review, the verdict, and DESIGN.md
       </p>
     </div>
   </section>
-  <section id="screens" class="region region--screens"></section>
-  <section id="get" class="region region--get"></section>
+  <section id="screens" class="region region--screens">
+    <div class="idx">
+      <h2 class="lead">Screens, once there are screens.</h2>
+      <p class="screens__note">
+        These slots are empty on purpose. Real captures of the running
+        application go here. Nothing on this page pretends to be one.
+      </p>
+    </div>
+
+    <div class="idx screens__grid">
+      <figure class="shot">
+        <div class="shot__empty"><span>ALL TRACKS</span></div>
+        <figcaption class="shot__cap">Every file in one list, folder on every row.</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="shot__empty"><span>SEARCH</span></div>
+        <figcaption class="shot__cap">Type any fragment; the list filters live.</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="shot__empty"><span>NOW PLAYING</span></div>
+        <figcaption class="shot__cap">Visualizer, seek, favorite.</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="shot__empty"><span>QUEUE</span></div>
+        <figcaption class="shot__cap">Reorder by hand, then save it as a playlist.</figcaption>
+      </figure>
+    </div>
+    <!--
+      To place a real screenshot, replace the .shot__empty div with:
+        <img class="shot__img" src="assets/screenshots/all-tracks.png"
+             alt="waverr showing the ALL TRACKS list" loading="lazy"
+             width="1280" height="800">
+      The slot is a fixed 16:10 box that crops to fill, so any aspect ratio
+      keeps the row aligned.
+    -->
+  </section>
+  <section id="get" class="region region--get">
+    <div class="idx">
+      <h2 class="lead">Point it at a folder and press play.</h2>
+    </div>
+
+    <div class="idx ruled get__listing">
+      <div class="row row--head">
+        <span class="row__name">File</span>
+        <span class="row__meta">Platform</span>
+        <span class="row__size">Cost</span>
+      </div>
+      <a class="row row--get" data-link="release" href="https://github.com">
+        <span class="row__name">waverr installer</span>
+        <span class="row__meta">Windows</span>
+        <span class="row__size">free</span>
+      </a>
+      <a class="row row--get" data-link="repo" href="https://github.com" rel="noopener">
+        <span class="row__name">waverr source</span>
+        <span class="row__meta">GitHub</span>
+        <span class="row__size">open</span>
+      </a>
+    </div>
+
+    <div class="idx">
+      <p class="get__fine">
+        Built with Electron. Windows installer only: there is no macOS or
+        Linux build. Nothing is uploaded anywhere; the index lives on your
+        machine.
+      </p>
+    </div>
+  </section>
 </main>
-<footer class="colophon"></footer>
+<footer class="colophon">
+  <div class="idx colophon__inner">
+    <span class="colophon__name">waverr</span>
+    <a class="entry" data-link="repo" href="https://github.com" rel="noopener">github</a>
+  </div>
+</footer>
 <script src="script.js"></script>
 </body>
 </html>

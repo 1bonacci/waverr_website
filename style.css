@@ -1,4 +1,21 @@
 /* == TOKENS ============================================== */
+/* Two monos, each doing a different job.
+
+   Departure Mono is a pixel face drawn from early command-line and 90s
+   screen interfaces — it IS the directory-index world, and it carries the
+   same character as the device's LCD. It sets the listing chrome, the
+   headings, and every label.
+
+   Geist Mono sets running prose only. Pixel faces stop being readable past
+   a sentence or two, and the paragraphs have to survive being read. */
+@font-face {
+  font-family: "Departure Mono";
+  src: url("assets/fonts/DepartureMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @font-face {
   font-family: "Geist Mono";
   src: url("assets/fonts/GeistMono%5Bwght%5D.woff2") format("woff2-variations");
@@ -19,6 +36,9 @@
   --paper:  #e8e8e6;   /* primary text, the device body */
   --live:   #c8c8c2;   /* the one signal: playing, focus */
 
+  --face-chrome: "Departure Mono", ui-monospace, monospace;  /* listing, headings, labels */
+  --face-prose:  "Geist Mono", ui-monospace, monospace;      /* running copy only */
+
   --col-meta: 13ch;    /* right-aligned metadata column */
   --col-size: 9ch;     /* right-aligned size column */
   --gut:      clamp(1rem, 2.4vw, 2rem);
@@ -37,7 +57,7 @@ body {
   margin: 0;
   background: var(--ink);
   color: var(--paper);
-  font-family: "Geist Mono", ui-monospace, monospace;
+  font-family: var(--face-chrome);
   font-size: 15px;
   font-weight: 400;
   line-height: 1.55;
@@ -210,6 +230,7 @@ img { max-width: 100%; display: block; }
 .top__path { color: var(--dim); }
 
 .top__lede {
+  font-family: var(--face-prose);
   margin: 0 0 2rem;
   max-width: 54ch;
   color: var(--mid);
@@ -281,6 +302,8 @@ img { max-width: 100%; display: block; }
 }
 
 .device__screen {
+  /* A pixel face on a pixel screen. */
+  font-family: var(--face-chrome);
   background: #0d0f0e;
   border-radius: 5px;
   padding: 9px 10px 7px;
@@ -448,6 +471,7 @@ img { max-width: 100%; display: block; }
 .compare__side--ours .compare__list em { color: var(--paper); }
 
 .compare__note {
+  font-family: var(--face-prose);
   margin: 0;
   font-size: 0.82rem;
   line-height: 1.65;
@@ -466,6 +490,7 @@ img { max-width: 100%; display: block; }
 .row--item { padding-block: 1.5rem; align-items: start; }
 
 .row--item .row__name {
+  font-family: var(--face-prose);
   /* Items carry prose, so the truncation rule from the data rows is off. */
   white-space: normal;
   overflow: visible;
@@ -488,6 +513,7 @@ img { max-width: 100%; display: block; }
 .row--item .row__size { padding-top: 0.25rem; }
 
 .does__caveat {
+  font-family: var(--face-prose);
   grid-column: 1 / -1;
   margin: 1.75rem 0 0;
   max-width: 62ch;
@@ -495,4 +521,170 @@ img { max-width: 100%; display: block; }
   line-height: 1.7;
   /* An honest limitation has to be legible to be honest. */
   color: var(--mid);
+}
+
+/* == REGION: SCREENS ===================================== */
+.region--screens { border-top: var(--rule-w) solid var(--rule); }
+
+.screens__note {
+  font-family: var(--face-prose);
+  grid-column: 1 / -1;
+  margin: -1.5rem 0 clamp(2.25rem, 4vw, 3.25rem);
+  max-width: 56ch;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: var(--mid);
+}
+
+.screens__grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 2.25rem);
+}
+
+.shot { grid-column: span 1; margin: 0; }
+
+/* Empty slot and real image share one box, so swapping never reflows. */
+.shot__empty,
+.shot__img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: center;
+  border: var(--rule-w) solid var(--rule);
+  background: var(--ink-2);
+}
+
+.shot__empty {
+  display: grid;
+  place-items: center;
+}
+
+.shot__empty span {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  color: var(--dim);
+}
+
+.shot__cap {
+  margin-top: 0.7rem;
+  padding-top: 0.55rem;
+  border-top: var(--rule-w) solid var(--rule);
+  font-size: 0.78rem;
+  color: var(--mid);
+}
+
+/* == REGION: GET ========================================= */
+.region--get { border-top: var(--rule-w) solid var(--rule); }
+
+.get__listing { margin-bottom: 1.5rem; }
+
+.row--get {
+  text-decoration: none;
+  padding-block: 1.15rem;
+  transition: background-color 140ms ease;
+}
+
+.row--get .row__name {
+  font-size: clamp(1.05rem, 2vw, 1.5rem);
+  letter-spacing: -0.02em;
+  color: var(--paper);
+}
+
+.row--get:hover { background: var(--ink-2); }
+.row--get:hover .row__meta,
+.row--get:hover .row__size { color: var(--mid); }
+
+/* The download line carries the page's one signal mark. */
+.row--get:first-of-type .row__name { position: relative; padding-left: 1.4rem; }
+.row--get:first-of-type .row__name::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 0.55rem;
+  height: 0.55rem;
+  background: var(--live);
+}
+
+.get__fine {
+  font-family: var(--face-prose);
+  grid-column: 1 / -1;
+  margin: 0;
+  max-width: 62ch;
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: var(--mid);
+}
+
+/* == REGION: COLOPHON ==================================== */
+.colophon {
+  border-top: var(--rule-w) solid var(--paper);
+  padding-block: 1.6rem;
+}
+
+.colophon__inner {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.colophon__name {
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* == RESPONSIVE ========================================== */
+@media (max-width: 900px) {
+  .region--top__inner { grid-template-columns: minmax(0, 1fr); row-gap: 3rem; }
+  .top__stage { grid-column: 1; }
+  .compare { grid-template-columns: minmax(0, 1fr); row-gap: 2.5rem; }
+  .compare__side--ours { padding-left: 0; border-left: 0; padding-top: 2rem;
+                          border-top: var(--rule-w) solid var(--rule); }
+}
+
+@media (max-width: 680px) {
+  /* Three columns become one; metadata drops beneath the name and the
+     vertical rules switch off, since there are no longer columns to divide. */
+  :root { --col-meta: auto; --col-size: auto; }
+
+  .idx,
+  .row,
+  .masthead__inner,
+  .screens__grid,
+  .compare { grid-template-columns: minmax(0, 1fr); }
+
+  /* A wordmark and one link: no reason to stack. */
+  .colophon__inner { grid-template-columns: minmax(0, 1fr) auto; }
+
+  .ruled { background-image: none; }
+
+  .row { row-gap: 0.25rem; }
+
+  .row__meta,
+  .row__size {
+    text-align: left;
+    grid-column: 1;
+  }
+
+  .row--head .row__meta,
+  .row--head .row__size { display: none; }
+
+  .row--item .row__meta,
+  .row--item .row__size { display: inline; padding-top: 0; }
+
+  .screens__grid { gap: 1.75rem; }
+
+  .masthead__inner { row-gap: 0.4rem; padding-block: 0.6rem; }
+  .masthead__nav { flex-wrap: wrap; gap: 0.9rem 1.1rem; }
+
+  .device { width: 100%; max-width: 290px; }
+  .device__wheel { width: 162px; height: 162px; }
+  .device__center { width: 62px; height: 62px; }
+}
+
+@media (max-width: 380px) {
+  .masthead__nav { gap: 0.7rem 0.85rem; }
+  .entry { font-size: 0.72rem; }
 }
