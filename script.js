@@ -18,14 +18,14 @@ const RELEASE_URL = 'https://github.com/REPLACE_ME/waverr/releases';
     if (!url) return;
 
     if (url.indexOf('REPLACE_ME') !== -1) {
-      /* Unresolved: neutralise the link and label it honestly. */
-      el.removeAttribute('href');
+      /* Unresolved: neutralise the link but keep it reachable. Removing href
+         would drop it out of the tab order while still announcing it as
+         disabled, so a keyboard user hears about a control they cannot
+         reach. Intercepting the click keeps it focusable and honest. */
       el.setAttribute('aria-disabled', 'true');
       el.classList.add('is-pending');
-      if (!el.dataset.pendingApplied) {
-        el.dataset.pendingApplied = '1';
-        el.title = 'Link not configured yet';
-      }
+      el.title = 'Link not configured yet';
+      el.addEventListener('click', function (e) { e.preventDefault(); });
       return;
     }
 

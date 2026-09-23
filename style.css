@@ -213,16 +213,27 @@ img { max-width: 100%; display: block; }
    link is not ready beats sending someone to a bare github.com homepage. */
 .is-pending {
   color: var(--dim);
-  border-bottom-color: transparent;
   cursor: not-allowed;
 }
-.is-pending::after {
+
+/* The marker hangs off inline elements only. On a .row it must live inside
+   the name track — appending to the row itself would add a fourth grid item
+   to a three-track subgrid and land the text past the last column. */
+.entry.is-pending {
+  border-bottom-color: transparent;
+}
+.entry.is-pending::after,
+.row--get.is-pending .row__name::after {
   content: " (soon)";
   font-size: 0.85em;
   color: var(--dim);
+  letter-spacing: 0.04em;
 }
-.row--get.is-pending { background: none; }
+
+.row--get.is-pending,
 .row--get.is-pending:hover { background: none; }
+.row--get.is-pending .row__name { color: var(--dim); }
+.row--get.is-pending .row__name::before { background: var(--dim); }
 
 /* == REGION: TOP ========================================= */
 .region--top { padding-top: 0; padding-bottom: 0; }
