@@ -18,7 +18,7 @@
 
 @font-face {
   font-family: "Geist Mono";
-  src: url("assets/fonts/GeistMono%5Bwght%5D.woff2") format("woff2-variations");
+  src: url("assets/fonts/GeistMono%5Bwght%5D.woff2") format("woff2");
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -133,9 +133,10 @@ img { max-width: 100%; display: block; }
   color: var(--dim);
 }
 
-/* Vertical column rules: the page's structural signature. Drawn as a
-   repeating background on the region so they run its full height,
-   independent of how many rows it holds. */
+/* The column rules are continuous down the whole page, not per-listing: this is
+   what separates a directory-index world from a costume worn by three sections.
+   Drawn on the region so they span its full height regardless of content. */
+.region,
 .ruled {
   background-image:
     linear-gradient(var(--rule), var(--rule)),
@@ -143,8 +144,8 @@ img { max-width: 100%; display: block; }
   background-size: var(--rule-w) 100%, var(--rule-w) 100%;
   background-repeat: no-repeat;
   background-position:
-    calc(100% - var(--gut) - var(--col-size) - var(--gut) / 2) 0,
-    calc(100% - var(--gut) - var(--col-size) - var(--col-meta) - var(--gut) * 1.5) 0;
+    calc(50% + var(--page) / 2 - var(--gut) - var(--col-size) - var(--gut) / 2) 0,
+    calc(50% + var(--page) / 2 - var(--gut) - var(--col-size) - var(--col-meta) - var(--gut) * 1.5) 0;
 }
 
 .region { padding-block: clamp(3.5rem, 7vw, 6rem); }
@@ -208,8 +209,23 @@ img { max-width: 100%; display: block; }
 }
 .entry--live:hover { border-bottom-color: var(--paper); }
 
+/* Shown only while REPO_URL / RELEASE_URL still hold REPLACE_ME. Saying the
+   link is not ready beats sending someone to a bare github.com homepage. */
+.is-pending {
+  color: var(--dim);
+  border-bottom-color: transparent;
+  cursor: not-allowed;
+}
+.is-pending::after {
+  content: " (soon)";
+  font-size: 0.85em;
+  color: var(--dim);
+}
+.row--get.is-pending { background: none; }
+.row--get.is-pending:hover { background: none; }
+
 /* == REGION: TOP ========================================= */
-.region--top { padding-top: clamp(2.5rem, 5vw, 4rem); padding-bottom: 0; }
+.region--top { padding-top: 0; padding-bottom: 0; }
 
 .region--top__inner {
   grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
@@ -217,6 +233,8 @@ img { max-width: 100%; display: block; }
   column-gap: clamp(2rem, 5vw, 4.5rem);
   padding-bottom: clamp(3rem, 6vw, 5rem);
 }
+
+.top__copy { padding-top: clamp(2.5rem, 5vw, 4rem); }
 
 .top__title {
   margin: 0 0 1.6rem;
@@ -293,10 +311,10 @@ img { max-width: 100%; display: block; }
   width: min(318px, 100%);
   padding: 20px 20px 28px;
   border-radius: 24px;
-  background: linear-gradient(168deg, #fbfbfa 0%, #ededea 48%, #d6d6d2 100%);
+  /* Flat paper, not imitated plastic. The object reads as physical from its
+     shape, its value against the ground, and one real cast shadow. */
+  background: var(--paper);
   box-shadow:
-    0 1px 1px rgba(255,255,255,.7) inset,
-    0 -2px 6px rgba(0,0,0,.10) inset,
     0 34px 70px rgba(0,0,0,.66),
     0 8px 22px rgba(0,0,0,.42);
 }
@@ -372,11 +390,7 @@ img { max-width: 100%; display: block; }
   width: 186px; height: 186px;
   margin: 0 auto;
   border-radius: 50%;
-  background: radial-gradient(circle at 50% 30%, #fafaf9, #e2e2df 60%, #cbcbc7 100%);
-  box-shadow:
-    0 1px 2px rgba(255,255,255,.9) inset,
-    0 -1px 4px rgba(0,0,0,.14) inset,
-    0 3px 10px rgba(0,0,0,.18);
+  background: #dcdcd9;
 }
 
 .device__center {
@@ -385,8 +399,7 @@ img { max-width: 100%; display: block; }
   transform: translate(-50%, -50%);
   width: 70px; height: 70px;
   border-radius: 50%;
-  background: radial-gradient(circle at 50% 34%, #f6f6f5, #dcdcd9 68%, #c6c6c2 100%);
-  box-shadow: 0 1px 3px rgba(0,0,0,.22), 0 1px 1px rgba(255,255,255,.9) inset;
+  background: var(--paper);
 }
 
 .device__menu {
@@ -433,7 +446,6 @@ img { max-width: 100%; display: block; }
    left edge marks it without turning it into a panel. */
 .compare__side--ours {
   padding-left: clamp(1.25rem, 3vw, 2.25rem);
-  border-left: var(--rule-w) solid var(--rule);
 }
 
 .compare__label {
@@ -448,10 +460,13 @@ img { max-width: 100%; display: block; }
 
 .compare__list { list-style: none; margin: 0 0 1.2rem; padding: 0; }
 
+/* Rows here obey the same name/value rhythm as every other listing on the
+   page rather than inventing a private flex layout. */
 .compare__list li {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: 1rem;
+  align-items: baseline;
   padding-block: 0.5rem;
   border-bottom: var(--rule-w) solid var(--rule);
   font-size: 0.86rem;
@@ -536,8 +551,10 @@ img { max-width: 100%; display: block; }
   color: var(--mid);
 }
 
+/* auto-fit, so one slot sits at its natural width and further captures
+   added later reflow into columns without touching this rule. */
 .screens__grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: clamp(1.25rem, 3vw, 2.25rem);
 }
 
@@ -658,7 +675,7 @@ img { max-width: 100%; display: block; }
   /* A wordmark and one link: no reason to stack. */
   .colophon__inner { grid-template-columns: minmax(0, 1fr) auto; }
 
-  .ruled { background-image: none; }
+  .region, .ruled { background-image: none; }
 
   .row { row-gap: 0.25rem; }
 

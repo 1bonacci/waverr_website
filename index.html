@@ -254,38 +254,28 @@ the finish review, the verdict, and DESIGN.md
   </section>
   <section id="screens" class="region region--screens">
     <div class="idx">
-      <h2 class="lead">Screens, once there are screens.</h2>
+      <h2 class="lead">One screen, so you know what you are getting.</h2>
       <p class="screens__note">
-        These slots are empty on purpose. Real captures of the running
-        application go here. Nothing on this page pretends to be one.
+        A capture of the running application goes here. It is the only slot on
+        this page waiting on a real file, and nothing in it is a mock-up.
       </p>
     </div>
 
     <div class="idx screens__grid">
       <figure class="shot">
         <div class="shot__empty"><span>ALL TRACKS</span></div>
-        <figcaption class="shot__cap">Every file in one list, folder on every row.</figcaption>
-      </figure>
-      <figure class="shot">
-        <div class="shot__empty"><span>SEARCH</span></div>
-        <figcaption class="shot__cap">Type any fragment; the list filters live.</figcaption>
-      </figure>
-      <figure class="shot">
-        <div class="shot__empty"><span>NOW PLAYING</span></div>
-        <figcaption class="shot__cap">Visualizer, seek, favorite.</figcaption>
-      </figure>
-      <figure class="shot">
-        <div class="shot__empty"><span>QUEUE</span></div>
-        <figcaption class="shot__cap">Reorder by hand, then save it as a playlist.</figcaption>
+        <figcaption class="shot__cap">
+          Every indexed file in one list, the folder shown on every row.
+        </figcaption>
       </figure>
     </div>
     <!--
-      To place a real screenshot, replace the .shot__empty div with:
+      Replace the .shot__empty div with the real capture:
         <img class="shot__img" src="assets/screenshots/all-tracks.png"
              alt="waverr showing the ALL TRACKS list" loading="lazy"
              width="1280" height="800">
-      The slot is a fixed 16:10 box that crops to fill, so any aspect ratio
-      keeps the row aligned.
+      The slot is a fixed 16:10 box that crops to fill, so any aspect ratio fits.
+      To show more than one, copy the whole <figure> block; the grid reflows.
     -->
   </section>
   <section id="get" class="region region--get">
